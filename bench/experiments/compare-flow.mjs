@@ -1,16 +1,15 @@
 #!/usr/bin/env node
-// compare-flow.mjs — Mode 2 (swimlane) comparison page.
-// Shows swimlane variants built on layoutMetro + legacy layoutFlow reference.
+// compare-flow.mjs — Mode 2 comparison page.
+// Process flow layout variants vs Metro (Mode 1) reference.
 
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { dagMap } from '../../dag-map/src/index.js';
-import { layoutMetro } from '../../dag-map/src/layout-metro.js';
 import { layoutFlow } from '../../dag-map/src/layout-flow.js';
-import { layoutFlowV2 } from '../../dag-map/src/layout-flow-v2.js';
-import { renderFlowV2 } from '../../dag-map/src/render-flow-v2.js';
+import { layoutProcess } from '../../dag-map/src/layout-process.js';
+import { renderProcess } from '../../dag-map/src/render-process.js';
 import { renderSVG } from '../../dag-map/src/render.js';
 import { createStationRenderer, createEdgeRenderer } from '../../dag-map/src/render-flow-station.js';
 import { loadExperimentFixtures } from './fixtures.mjs';
@@ -26,20 +25,20 @@ const VERSIONS = {
       mainSpacing: 26, subSpacing: 40,
     },
   },
-  'flowv2-default': {
-    label: 'FlowV2',
-    engine: 'flowv2',
-    opts: { laneHeight: 70, layerSpacing: 55 },
+  'process-ltr': {
+    label: 'Process LTR',
+    engine: 'process',
+    opts: { direction: 'ltr', scale: 1.5 },
   },
-  'flowv2-compact': {
-    label: 'FlowV2 Compact',
-    engine: 'flowv2',
-    opts: { laneHeight: 50, layerSpacing: 40, scale: 1.2 },
+  'process-ltr-compact': {
+    label: 'Process LTR Compact',
+    engine: 'process',
+    opts: { direction: 'ltr', scale: 1.0, layerGap: 55, stationGap: 40, labelSize: 3.5 },
   },
-  'flowv2-wide': {
-    label: 'FlowV2 Wide',
-    engine: 'flowv2',
-    opts: { laneHeight: 90, layerSpacing: 65 },
+  'process-ttb': {
+    label: 'Process TTB',
+    engine: 'process',
+    opts: { direction: 'ttb', scale: 1.5 },
   },
   'flow-legacy': {
     label: 'Flow Legacy',
@@ -67,28 +66,31 @@ async function main() {
 
     for (const [vName, version] of Object.entries(VERSIONS)) {
       try {
-        const baseOpts = { theme: f.theme || 'cream', ...(f.opts || {}), routes: f.routes, labelSize: 1.2 };
+        const baseOpts = { theme: f.theme || 'cream', ...(f.opts || {}), routes: f.routes };
         const mergedOpts = { ...baseOpts, ...version.opts };
         if (version.opts?.strategies) mergedOpts.strategies = { ...version.opts.strategies };
-        if (version.opts?.strategyConfig) mergedOpts.strategyConfig = { ...version.opts.strategyConfig };
 
         let svg;
         if (version.engine === 'flow-legacy') {
-          // Render with layoutFlow's own custom renderers to bypass
-          // render.js pill/track changes that break Flow rendering
-          const layout = layoutFlow(f.dag, mergedOpts);
+          const layout = layoutFlow(f.dag, { ...mergedOpts, labelSize: 1.2 });
           const renderNode = createStationRenderer(layout, f.routes);
           const renderEdge = createEdgeRenderer(layout);
-          svg = renderSVG(f.dag, layout, { ...mergedOpts, renderNode, renderEdge });
-        } else if (version.engine === 'flowv2') {
-          const layout = layoutFlowV2(f.dag, mergedOpts);
-          svg = renderFlowV2(f.dag, layout, mergedOpts);
+          svg = renderSVG(f.dag, layout, { ...mergedOpts, labelSize: 1.2, renderNode, renderEdge });
+        } else if (version.engine === 'process') {
+          const layout = layoutProcess(f.dag, mergedOpts);
+          svg = renderProcess(f.dag, layout, mergedOpts);
         } else {
           svg = dagMap(f.dag, mergedOpts).svg;
         }
-        entry.versions[vName] = { svg, label: version.label };
+        // Keep original for modal zoom, strip width/height for grid cell
+        const svgFull = svg;
+        svg = svg.replace(/(<svg[^>]*?)\s+width="[^"]*"/, '$1');
+        svg = svg.replace(/(<svg[^>]*?)\s+height="[^"]*"/, '$1');
+        svg = svg.replace('<svg ', '<svg preserveAspectRatio="xMidYMid meet" ');
+        entry.versions[vName] = { svg, svgFull, label: version.label };
       } catch (err) {
-        entry.versions[vName] = { svg: `<svg width="200" height="60"><text x="10" y="30" fill="red">${err.message.slice(0, 60)}</text></svg>`, label: version.label };
+        console.error(`  ✗ ${f.id} / ${vName}:`, err.message);
+        entry.versions[vName] = { svg: `<svg width="200" height="60"><text x="10" y="30" fill="red">${err.message.slice(0, 80)}</text></svg>`, label: version.label };
       }
     }
 
@@ -97,7 +99,7 @@ async function main() {
   }
 
   // Build HTML
-  let html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Swimlane Comparison ${timestamp}</title>
+  let html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Process Flow Comparison ${timestamp}</title>
 <style>
 body { font-family: -apple-system, sans-serif; margin: 0; padding: 16px; background: #f0f0f0; }
 h1 { font-size: 20px; margin-bottom: 4px; }
@@ -106,15 +108,16 @@ h1 { font-size: 20px; margin-bottom: 4px; }
 .fixture h2 { font-size: 14px; color: #333; margin: 0 0 2px; }
 .fixture .info { font-size: 11px; color: #999; margin-bottom: 8px; }
 .grid { display: grid; grid-template-columns: repeat(${versionNames.length}, 1fr); gap: 8px; }
-.cell { border: 1px solid #e0e0e0; border-radius: 4px; padding: 6px; overflow: auto; cursor: pointer; max-height: 500px; }
+.cell { border: 1px solid #e0e0e0; border-radius: 4px; padding: 6px; overflow: hidden; cursor: pointer; }
 .cell:hover { border-color: #4a90d9; }
 .cell h3 { font-size: 11px; color: #666; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-.cell svg { max-width: 100%; height: auto; display: block; }
+.svg-wrap img { max-width: 100%; max-height: 450px; display: block; }
 .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; cursor: pointer; overflow: auto; }
 .modal.open { display: flex; align-items: flex-start; justify-content: center; padding: 20px; }
 .modal-content { background: white; border-radius: 8px; padding: 16px; overflow: auto; max-width: 95vw; max-height: 95vh; }
 .modal-content h3 { margin: 0 0 8px; font-size: 14px; color: #333; }
 .modal-content svg { display: block; max-width: none; width: auto; height: auto; }
+.modal-content img { display: block; max-width: 90vw; max-height: 85vh; }
 .tooltip { position: fixed; background: #333; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; pointer-events: none; z-index: 2000; display: none; }
 </style></head><body>
 
@@ -131,37 +134,44 @@ function showModal(cell) {
   const title = cell.querySelector('h3')?.textContent || '';
   const fixture = cell.closest('.fixture')?.querySelector('h2')?.textContent || '';
   document.getElementById('modal-title').textContent = fixture + ' — ' + title;
-  document.getElementById('modal-svg').innerHTML = cell.querySelector('svg')?.outerHTML || '';
+  const img = cell.querySelector('img');
+  const fullSrc = img?.getAttribute('data-full') || '';
+  if (fullSrc) {
+    // Decode base64 SVG (UTF-8 safe) and insert inline for tooltip support
+    const b64 = fullSrc.replace('data:image/svg+xml;base64,', '');
+    const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+    const svgText = new TextDecoder().decode(bytes);
+    document.getElementById('modal-svg').innerHTML = svgText;
+  } else {
+    document.getElementById('modal-svg').innerHTML = '';
+  }
   document.getElementById('modal').classList.add('open');
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('modal').classList.remove('open'); });
 const tip = document.getElementById('tooltip');
 document.addEventListener('mouseover', e => {
   const node = e.target.closest('[data-node-id]');
-  const route = e.target.closest('[data-route-id]');
   if (node) {
-    tip.textContent = node.querySelector('.dm-label')?.textContent || node.getAttribute('data-node-id');
-    tip.style.display = 'block';
-  } else if (route) {
-    const id = route.getAttribute('data-route-id');
-    const nodes = route.getAttribute('data-route-nodes') || '';
-    tip.textContent = id + ': ' + nodes;
+    const label = node.querySelector('text')?.textContent || node.getAttribute('data-node-id');
+    tip.textContent = label;
     tip.style.display = 'block';
   }
 });
 document.addEventListener('mousemove', e => { if (tip.style.display === 'block') { tip.style.left = (e.clientX+12)+'px'; tip.style.top = (e.clientY-8)+'px'; } });
-document.addEventListener('mouseout', e => { if (e.target.closest('[data-node-id]') || e.target.closest('[data-route-id]')) tip.style.display = 'none'; });
+document.addEventListener('mouseout', e => { if (e.target.closest('[data-node-id]')) tip.style.display = 'none'; });
 </script>
 
-<h1>Mode 2: Swimlane Layout Comparison</h1>
-<div class="meta">${versionNames.length} versions × ${fixtures.length} fixtures | Swimlane = each route gets its own Y lane</div>`;
+<h1>Mode 2: Process Flow Comparison</h1>
+<div class="meta">${versionNames.length} versions × ${fixtures.length} fixtures | Sugiyama card-centric layout vs Metro and Flow Legacy</div>`;
 
   for (const r of results) {
     html += `<div class="fixture"><h2>${r.id}</h2><div class="info">${r.source} — ${r.nodes} nodes, ${r.edges} edges, ${r.routes} routes</div><div class="grid">`;
     for (const vName of versionNames) {
       const v = r.versions[vName];
       if (!v) continue;
-      html += `<div class="cell" onclick="showModal(this)"><h3>${v.label || vName}</h3>${v.svg}</div>`;
+      const b64 = Buffer.from(v.svg).toString('base64');
+      const b64Full = Buffer.from(v.svgFull).toString('base64');
+      html += `<div class="cell" onclick="showModal(this)"><h3>${v.label || vName}</h3><div class="svg-wrap"><img src="data:image/svg+xml;base64,${b64}" data-full="data:image/svg+xml;base64,${b64Full}"></div></div>`;
     }
     html += `</div></div>`;
   }
