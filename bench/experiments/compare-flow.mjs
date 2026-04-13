@@ -30,15 +30,15 @@ const VERSIONS = {
     engine: 'process',
     opts: { direction: 'ltr', scale: 1.5 },
   },
-  'process-ltr-compact': {
-    label: 'Process LTR Compact',
+  'process-frequency': {
+    label: 'Process Frequency',
     engine: 'process',
-    opts: { direction: 'ltr', scale: 1.0, layerGap: 55, stationGap: 40, labelSize: 3.5 },
+    opts: { direction: 'ltr', scale: 1.5, frequency: true },
   },
-  'process-ttb': {
-    label: 'Process TTB',
+  'process-bundled': {
+    label: 'Process Bundled',
     engine: 'process',
-    opts: { direction: 'ttb', scale: 1.5 },
+    opts: { direction: 'ltr', scale: 1.5, bundling: true },
   },
   'flow-legacy': {
     label: 'Flow Legacy',
