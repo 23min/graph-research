@@ -98,11 +98,29 @@ export function evaluateProcessFitness(dag, routes, permutation, options = {}) {
     const aspect = layout.width > 0 && layout.height > 0
       ? Math.max(layout.width / layout.height, layout.height / layout.width)
       : 1;
-    const aspectPenalty = Math.max(0, aspect - 3); // penalize > 3:1
+    const aspectPenalty = Math.max(0, aspect - 3);
 
-    // 6. Card-route overlap count
-    let cardOverlaps = 0;
-    // (Would need route grid access — approximate from layout dimensions for now)
+    // 6. Staircase penalty — measures total vertical drift across layers.
+    // For each route, sum |Y_next - Y_current| for consecutive stations.
+    // A flat layout has small total drift. A staircase has large drift.
+    // This pushes the GA toward orderings where shared-station routes
+    // get adjacent home lanes, keeping the layout compact.
+    let staircase = 0;
+    for (const rp of layout.routePaths) {
+      // Collect station Y positions along this route
+      const routeNodes = reorderedRoutes[rp.ri]?.nodes || [];
+      let prevY = null;
+      for (const nodeId of routeNodes) {
+        const sp = layout.stationPos.get(nodeId);
+        if (!sp) continue;
+        const y = direction === 'ltr' ? sp.y : sp.x;
+        if (prevY !== null) staircase += Math.abs(y - prevY);
+        prevY = y;
+      }
+    }
+    // Normalize by number of routes and stations for comparability
+    const stationCount = layout.stationPos.size || 1;
+    const normalizedStaircase = staircase / (stationCount * 10);
 
     // Composite fitness — weights are GA-evolvable
     const weights = options.weights ?? {
@@ -111,6 +129,7 @@ export function evaluateProcessFitness(dag, routes, permutation, options = {}) {
       bends: 5,
       edgeLength: 0.01,
       aspectPenalty: 10,
+      staircase: 8,
     };
 
     const fitness =
@@ -118,9 +137,10 @@ export function evaluateProcessFitness(dag, routes, permutation, options = {}) {
       overlaps * weights.overlaps +
       bends * weights.bends +
       totalLength * weights.edgeLength +
-      aspectPenalty * weights.aspectPenalty;
+      aspectPenalty * weights.aspectPenalty +
+      normalizedStaircase * weights.staircase;
 
-    return { fitness, crossings, overlaps, bends, totalLength: Math.round(totalLength), aspectPenalty: +aspectPenalty.toFixed(2) };
+    return { fitness, crossings, overlaps, bends, totalLength: Math.round(totalLength), aspectPenalty: +aspectPenalty.toFixed(2), staircase: +normalizedStaircase.toFixed(1) };
   } catch (e) {
     return { fitness: Infinity, crossings: 999, overlaps: 999, bends: 999, totalLength: 0, aspectPenalty: 0, error: e.message };
   }
