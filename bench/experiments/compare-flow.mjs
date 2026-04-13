@@ -12,6 +12,7 @@ import { layoutProcess } from '../../dag-map/src/layout-process.js';
 import { renderProcess } from '../../dag-map/src/render-process.js';
 import { renderSVG } from '../../dag-map/src/render.js';
 import { createStationRenderer, createEdgeRenderer } from '../../dag-map/src/render-flow-station.js';
+import { evolveProcessLayout } from '../direct/process-ga.mjs';
 import { loadExperimentFixtures } from './fixtures.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -64,18 +65,39 @@ async function main() {
   for (const f of fixtures) {
     const entry = { id: f.id, source: f.source, nodes: f.dag.nodes.length, edges: f.dag.edges.length, routes: f.routes.length, versions: {} };
 
+    // Run GA to find optimal route ordering for this fixture
+    let optimizedRoutes = f.routes;
+    if (f.routes.length > 1 && f.routes.length <= 10) {
+      const ga = evolveProcessLayout(f.dag, f.routes, {
+        populationSize: 20,
+        generations: 40,
+        direction: 'ltr',
+      });
+      if (ga.bestFitness.crossings < 999) {
+        optimizedRoutes = ga.bestPermutation.map(i => f.routes[i]);
+        const defaultX = ga.history.length > 0 ? ga.history[0] : null;
+        if (ga.bestFitness.crossings === 0) {
+          console.log(`  GA: ${f.id} → 0 crossings [${ga.bestPermutation}]`);
+        } else if (defaultX && ga.bestFitness.crossings < defaultX.crossings) {
+          console.log(`  GA: ${f.id} → ${ga.bestFitness.crossings} crossings (was more) [${ga.bestPermutation}]`);
+        }
+      }
+    }
+
     for (const [vName, version] of Object.entries(VERSIONS)) {
       try {
-        const baseOpts = { theme: f.theme || 'cream', ...(f.opts || {}), routes: f.routes };
+        // Process versions use GA-optimized routes, others use original
+        const useRoutes = version.engine === 'process' ? optimizedRoutes : f.routes;
+        const baseOpts = { theme: f.theme || 'cream', ...(f.opts || {}), routes: useRoutes };
         const mergedOpts = { ...baseOpts, ...version.opts };
         if (version.opts?.strategies) mergedOpts.strategies = { ...version.opts.strategies };
 
         let svg;
         if (version.engine === 'flow-legacy') {
-          const layout = layoutFlow(f.dag, { ...mergedOpts, labelSize: 1.2 });
+          const layout = layoutFlow(f.dag, { ...mergedOpts, routes: f.routes, labelSize: 1.2 });
           const renderNode = createStationRenderer(layout, f.routes);
           const renderEdge = createEdgeRenderer(layout);
-          svg = renderSVG(f.dag, layout, { ...mergedOpts, labelSize: 1.2, renderNode, renderEdge });
+          svg = renderSVG(f.dag, layout, { ...mergedOpts, routes: f.routes, labelSize: 1.2, renderNode, renderEdge });
         } else if (version.engine === 'process') {
           const layout = layoutProcess(f.dag, mergedOpts);
           svg = renderProcess(f.dag, layout, mergedOpts);
