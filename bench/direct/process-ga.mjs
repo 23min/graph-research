@@ -72,12 +72,22 @@ export function evaluateProcessFitness(dag, routes, permutation, options = {}) {
       }
     }
 
-    // 3. Bends: Y-direction reversals per route
+    // 3. Bends + tiny elbows: count direction reversals AND small bends
     let bends = 0;
+    let tinyElbows = 0;
+    const lt = layout.lineThickness || 5;
     for (const rp of layout.routePaths) {
       let prevDy = 0;
       for (const seg of rp.segments) {
         const lM = [...seg.d.matchAll(/[ML]\s+([\d.-]+)\s+([\d.-]+)/g)];
+        if (lM.length >= 3) {
+          // Check for tiny elbows: H-V-H where V segment < lineThickness*4
+          const pts = lM.map(m => [Number(m[1]), Number(m[2])]);
+          for (let k = 1; k < pts.length - 1; k++) {
+            const segLen = Math.sqrt((pts[k][0]-pts[k-1][0])**2 + (pts[k][1]-pts[k-1][1])**2);
+            if (segLen > 0.5 && segLen < lt * 4) tinyElbows++;
+          }
+        }
         for (let k = 1; k < lM.length; k++) {
           const dy = Number(lM[k][2]) - Number(lM[k - 1][2]);
           if (Math.abs(dy) > 0.5 && Math.abs(prevDy) > 0.5) {
@@ -127,6 +137,7 @@ export function evaluateProcessFitness(dag, routes, permutation, options = {}) {
       crossings: 100,
       overlaps: 20,
       bends: 5,
+      tinyElbows: 15,
       edgeLength: 0.01,
       aspectPenalty: 10,
       staircase: 8,
@@ -136,11 +147,12 @@ export function evaluateProcessFitness(dag, routes, permutation, options = {}) {
       crossings * weights.crossings +
       overlaps * weights.overlaps +
       bends * weights.bends +
+      tinyElbows * weights.tinyElbows +
       totalLength * weights.edgeLength +
       aspectPenalty * weights.aspectPenalty +
       normalizedStaircase * weights.staircase;
 
-    return { fitness, crossings, overlaps, bends, totalLength: Math.round(totalLength), aspectPenalty: +aspectPenalty.toFixed(2), staircase: +normalizedStaircase.toFixed(1) };
+    return { fitness, crossings, overlaps, bends, tinyElbows, totalLength: Math.round(totalLength), aspectPenalty: +aspectPenalty.toFixed(2), staircase: +normalizedStaircase.toFixed(1) };
   } catch (e) {
     return { fitness: Infinity, crossings: 999, overlaps: 999, bends: 999, totalLength: 0, aspectPenalty: 0, error: e.message };
   }
