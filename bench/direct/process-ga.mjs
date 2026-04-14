@@ -27,17 +27,59 @@ export function evaluateProcessFitness(dag, routes, permutation, options = {}) {
       ...(options.layoutOpts || {}),
     });
 
-    // Extract line segments from all route paths
+    // Extract ORTHOGONAL line segments from all route paths.
+    // Parse SVG path properly: M/L give endpoints, Q gives curves
+    // (rounded corners). Extract the 3 key segments of H-V-H:
+    //   H1: start → jog (horizontal)
+    //   V:  jog top → jog bottom (vertical)
+    //   H2: jog → end (horizontal)
+    // For near-straight (H+V step): 2 segments.
+    // For straight lines: 1 segment.
     const lines = [];
     for (const rp of layout.routePaths) {
       for (const seg of rp.segments) {
-        const lM = [...seg.d.matchAll(/[ML]\s+([\d.-]+)\s+([\d.-]+)/g)];
-        for (let k = 1; k < lM.length; k++) {
-          lines.push({
-            ri: rp.ri,
-            x1: Number(lM[k - 1][1]), y1: Number(lM[k - 1][2]),
-            x2: Number(lM[k][1]), y2: Number(lM[k][2]),
-          });
+        // Get ALL coordinate points from M, L, and Q commands
+        const allNums = seg.d.match(/[\d.-]+/g)?.map(Number) || [];
+        if (allNums.length < 4) continue;
+        const startX = allNums[0], startY = allNums[1];
+        const endX = allNums[allNums.length - 2], endY = allNums[allNums.length - 1];
+
+        // Find jog position from Q control points
+        const qM = [...seg.d.matchAll(/Q\s+([\d.-]+)\s+([\d.-]+)/g)];
+
+        if (qM.length === 0) {
+          // No curves — straight or H+V step
+          const lM = [...seg.d.matchAll(/L\s+([\d.-]+)\s+([\d.-]+)/g)];
+          if (lM.length === 2) {
+            // H+V step: two orthogonal segments
+            const midX = Number(lM[0][1]), midY = Number(lM[0][2]);
+            lines.push({ ri: rp.ri, x1: startX, y1: startY, x2: midX, y2: midY });
+            lines.push({ ri: rp.ri, x1: midX, y1: midY, x2: endX, y2: endY });
+          } else {
+            // Single straight line
+            lines.push({ ri: rp.ri, x1: startX, y1: startY, x2: endX, y2: endY });
+          }
+        } else {
+          // H-V-H (or V-H-V) with Q curves — extract 3 key segments
+          const jogPrimary = Number(qM[0][1]); // jog X for LTR, jog Y for TTB
+          const jogCross = Number(qM[0][2]);
+
+          // Determine direction from path structure
+          const isHVH = Math.abs(startY - jogCross) < Math.abs(startX - jogPrimary);
+
+          if (isHVH || qM.length >= 2) {
+            // H-V-H: H1 at startY, V jog at jogX, H2 at endY
+            const jogX = jogPrimary;
+            lines.push({ ri: rp.ri, x1: startX, y1: startY, x2: jogX, y2: startY }); // H1
+            lines.push({ ri: rp.ri, x1: jogX, y1: startY, x2: jogX, y2: endY });     // V
+            lines.push({ ri: rp.ri, x1: jogX, y1: endY, x2: endX, y2: endY });       // H2
+          } else {
+            // V-H-V: V1 at startX, H jog at jogY, V2 at endX
+            const jogY = jogCross;
+            lines.push({ ri: rp.ri, x1: startX, y1: startY, x2: startX, y2: jogY }); // V1
+            lines.push({ ri: rp.ri, x1: startX, y1: jogY, x2: endX, y2: jogY });     // H
+            lines.push({ ri: rp.ri, x1: endX, y1: jogY, x2: endX, y2: endY });       // V2
+          }
         }
       }
     }
