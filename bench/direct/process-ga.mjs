@@ -50,24 +50,36 @@ export function evaluateProcessFitness(dag, routes, permutation, options = {}) {
       }
     }
 
-    // 2. Overlaps: different routes at nearly the same position
+    // 2. Overlaps: any two segments from different routes that run at
+    // nearly the same position with overlapping extent. This catches:
+    // - Parallel horizontal segments at same Y (HH overlay)
+    // - Parallel vertical segments at same X (VV overlay)
+    // - H-V-H bend mid-section overlaying on another route's H segment
     let overlaps = 0;
+    const threshold = (layout.lineThickness || 5) * 1.8;
     for (let i = 0; i < lines.length; i++) {
       for (let j = i + 1; j < lines.length; j++) {
         if (lines[i].ri === lines[j].ri) continue;
-        // Same-direction parallel segments within lineThickness of each other
-        const isHH = Math.abs(lines[i].y1 - lines[i].y2) < 1 && Math.abs(lines[j].y1 - lines[j].y2) < 1;
-        const isVV = Math.abs(lines[i].x1 - lines[i].x2) < 1 && Math.abs(lines[j].x1 - lines[j].x2) < 1;
-        if (isHH && Math.abs(lines[i].y1 - lines[j].y1) < layout.lineThickness * 1.5) {
-          // Check X overlap
-          const minX1 = Math.min(lines[i].x1, lines[i].x2), maxX1 = Math.max(lines[i].x1, lines[i].x2);
-          const minX2 = Math.min(lines[j].x1, lines[j].x2), maxX2 = Math.max(lines[j].x1, lines[j].x2);
-          if (minX1 < maxX2 && minX2 < maxX1) overlaps++;
+        const a = lines[i], b = lines[j];
+        const aIsH = Math.abs(a.y1 - a.y2) < 1;
+        const aIsV = Math.abs(a.x1 - a.x2) < 1;
+        const bIsH = Math.abs(b.y1 - b.y2) < 1;
+        const bIsV = Math.abs(b.x1 - b.x2) < 1;
+
+        // HH: both horizontal, similar Y, overlapping X
+        if (aIsH && bIsH && Math.abs(a.y1 - b.y1) < threshold) {
+          const minXa = Math.min(a.x1, a.x2), maxXa = Math.max(a.x1, a.x2);
+          const minXb = Math.min(b.x1, b.x2), maxXb = Math.max(b.x1, b.x2);
+          const overlapLen = Math.min(maxXa, maxXb) - Math.max(minXa, minXb);
+          if (overlapLen > threshold) overlaps++;
         }
-        if (isVV && Math.abs(lines[i].x1 - lines[j].x1) < layout.lineThickness * 1.5) {
-          const minY1 = Math.min(lines[i].y1, lines[i].y2), maxY1 = Math.max(lines[i].y1, lines[i].y2);
-          const minY2 = Math.min(lines[j].y1, lines[j].y2), maxY2 = Math.max(lines[j].y1, lines[j].y2);
-          if (minY1 < maxY2 && minY2 < maxY1) overlaps++;
+
+        // VV: both vertical, similar X, overlapping Y
+        if (aIsV && bIsV && Math.abs(a.x1 - b.x1) < threshold) {
+          const minYa = Math.min(a.y1, a.y2), maxYa = Math.max(a.y1, a.y2);
+          const minYb = Math.min(b.y1, b.y2), maxYb = Math.max(b.y1, b.y2);
+          const overlapLen = Math.min(maxYa, maxYb) - Math.max(minYa, minYb);
+          if (overlapLen > threshold) overlaps++;
         }
       }
     }
