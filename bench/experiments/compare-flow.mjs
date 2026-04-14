@@ -26,20 +26,22 @@ const VERSIONS = {
       mainSpacing: 26, subSpacing: 40,
     },
   },
-  'process-ltr': {
-    label: 'Process LTR',
+  'process-default': {
+    label: 'Process Default',
     engine: 'process',
     opts: { direction: 'ltr', scale: 1.5 },
+    noGA: true, // use original route ordering — this is what the library ships
+  },
+  'process-ga': {
+    label: 'Process GA',
+    engine: 'process',
+    opts: { direction: 'ltr', scale: 1.5 },
+    // uses GA-optimized ordering — this is the development target
   },
   'process-ttb': {
     label: 'Process TTB',
     engine: 'process',
     opts: { direction: 'ttb', scale: 1.5 },
-  },
-  'process-bundled': {
-    label: 'Process Bundled',
-    engine: 'process',
-    opts: { direction: 'ltr', scale: 1.5, bundling: true },
   },
   'flow-legacy': {
     label: 'Flow Legacy',
@@ -83,8 +85,8 @@ async function main() {
 
     for (const [vName, version] of Object.entries(VERSIONS)) {
       try {
-        // Process versions use GA-optimized routes per direction
-        const useRoutes = version.engine === 'process'
+        // Process versions use GA-optimized routes unless noGA flag
+        const useRoutes = version.engine === 'process' && !version.noGA
           ? (version.opts?.direction === 'ttb' ? optimizedRoutesTTB : optimizedRoutesLTR)
           : f.routes;
         const baseOpts = { theme: f.theme || 'cream', ...(f.opts || {}), routes: useRoutes };
