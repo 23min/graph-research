@@ -31,10 +31,10 @@ const VERSIONS = {
     engine: 'process',
     opts: { direction: 'ltr', scale: 1.5 },
   },
-  'process-frequency': {
-    label: 'Process Frequency',
+  'process-ttb': {
+    label: 'Process TTB',
     engine: 'process',
-    opts: { direction: 'ltr', scale: 1.5, frequency: true },
+    opts: { direction: 'ttb', scale: 1.5 },
   },
   'process-bundled': {
     label: 'Process Bundled',
