@@ -43,6 +43,12 @@ const VERSIONS = {
     engine: 'process',
     opts: { direction: 'ttb', scale: 1.5 },
   },
+  'process-bezier': {
+    label: 'Process Bezier',
+    engine: 'process',
+    opts: { direction: 'ltr', scale: 1.5, routing: 'bezier', stationStyle: 'metro' },
+    noGA: true,
+  },
   'flow-legacy': {
     label: 'Flow Legacy',
     engine: 'flow-legacy',
@@ -89,7 +95,7 @@ async function main() {
         const useRoutes = version.engine === 'process' && !version.noGA
           ? (version.opts?.direction === 'ttb' ? optimizedRoutesTTB : optimizedRoutesLTR)
           : f.routes;
-        const baseOpts = { theme: f.theme || 'cream', ...(f.opts || {}), routes: useRoutes };
+        const baseOpts = { theme: f.theme || 'cream', ...(f.opts || {}), routes: useRoutes, ...(f.edgeWeights ? { edgeWeights: f.edgeWeights } : {}) };
         const mergedOpts = { ...baseOpts, ...version.opts };
         if (version.opts?.strategies) mergedOpts.strategies = { ...version.opts.strategies };
 
@@ -137,17 +143,18 @@ h1 { font-size: 20px; margin-bottom: 4px; }
 .svg-wrap img { max-width: 100%; max-height: 450px; display: block; }
 .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; cursor: pointer; overflow: auto; }
 .modal.open { display: flex; align-items: flex-start; justify-content: center; padding: 20px; }
-.modal-content { background: white; border-radius: 8px; padding: 16px; overflow: auto; max-width: 95vw; max-height: 95vh; }
-.modal-content h3 { margin: 0 0 8px; font-size: 14px; color: #333; }
-.modal-content svg { display: block; max-width: none; width: auto; height: auto; }
-.modal-content img { display: block; max-width: 90vw; max-height: 85vh; }
+.modal-content { background: white; border-radius: 8px; padding: 16px; overflow: hidden; max-width: 98vw; max-height: 98vh; display: flex; flex-direction: column; }
+.modal-content h3 { margin: 0 0 8px; font-size: 14px; color: #333; flex-shrink: 0; }
+.modal-content .svg-container { flex: 1; overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 0; }
+.modal-content svg { display: block; max-width: 95vw; max-height: 85vh; width: auto; height: auto; }
+.modal-content img { display: block; max-width: 95vw; max-height: 85vh; object-fit: contain; }
 .tooltip { position: fixed; background: #333; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; pointer-events: none; z-index: 2000; display: none; }
 </style></head><body>
 
 <div class="modal" id="modal" onclick="this.classList.remove('open')">
   <div class="modal-content" onclick="event.stopPropagation()">
     <h3 id="modal-title"></h3>
-    <div id="modal-svg"></div>
+    <div class="svg-container"><div id="modal-svg"></div></div>
   </div>
 </div>
 <div class="tooltip" id="tooltip"></div>
@@ -163,7 +170,13 @@ function showModal(cell) {
     // Decode base64 SVG (UTF-8 safe) and insert inline for tooltip support
     const b64 = fullSrc.replace('data:image/svg+xml;base64,', '');
     const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-    const svgText = new TextDecoder().decode(bytes);
+    let svgText = new TextDecoder().decode(bytes);
+    // Strip fixed width/height, ensure preserveAspectRatio for fit-to-screen
+    svgText = svgText.replace(/(<svg[^>]*?)\s+width="[^"]*"/, '$1');
+    svgText = svgText.replace(/(<svg[^>]*?)\s+height="[^"]*"/, '$1');
+    if (!/preserveAspectRatio=/.test(svgText)) {
+      svgText = svgText.replace('<svg ', '<svg preserveAspectRatio="xMidYMid meet" ');
+    }
     document.getElementById('modal-svg').innerHTML = svgText;
   } else {
     document.getElementById('modal-svg').innerHTML = '';
@@ -201,7 +214,15 @@ document.addEventListener('mouseout', e => { if (e.target.closest('[data-node-id
 
   html += `</body></html>`;
   await writeFile(join(outDir, 'comparison.html'), html);
+
+  // Update 'latest' symlink for stable URL
+  const { symlink, unlink } = await import('node:fs/promises');
+  const latestLink = join(__dirname, 'results', 'latest');
+  try { await unlink(latestLink); } catch {}
+  await symlink('flow-' + timestamp, latestLink);
+
   console.log(`\nResults: ${outDir}/comparison.html`);
+  console.log(`Latest:  ${latestLink}/comparison.html`);
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

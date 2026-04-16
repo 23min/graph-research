@@ -42,7 +42,11 @@ export async function loadExperimentFixtures() {
     .map(m => ({ ...m, source: 'internal' }));
   fixtures.push(...internal);
 
-  // Tier 4: External North DAGs (15-50 nodes, routes auto-discovered)
+  // Tier 4: Random generated DAGs (reproducible, varying topology)
+  const { randomFixtures } = await import('../fixtures/random/generate.mjs');
+  fixtures.push(...randomFixtures.filter(f => f.routes.length > 0).map(f => ({ ...f, source: 'random' })));
+
+  // Tier 5: External North DAGs (15-50 nodes, routes auto-discovered)
   const northDir = join(__dirname, '..', 'corpora', 'tier-c', 'north');
   if (existsSync(northDir)) {
     const { loadGraphMLDir } = await import('../loaders/graphml.mjs');

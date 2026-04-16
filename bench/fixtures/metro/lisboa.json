@@ -6,203 +6,303 @@
     "nodes": [
       {
         "id": "256972634",
-        "label": "Olaias"
+        "label": "Olaias",
+        "geoX": 4746.557161111111,
+        "geoY": 3814.7086074120966
       },
       {
         "id": "256975148",
-        "label": "Bela Vista"
+        "label": "Bela Vista",
+        "geoX": 4746.731161111111,
+        "geoY": 3814.420264772189
       },
       {
         "id": "256975157",
-        "label": "Chelas"
+        "label": "Chelas",
+        "geoX": 4746.836466666667,
+        "geoY": 3814.1607455360386
       },
       {
         "id": "256975161",
-        "label": "Olivais"
+        "label": "Olivais",
+        "geoX": 4746.896847222222,
+        "geoY": 3813.946281397243
       },
       {
         "id": "256975169",
-        "label": "Cabo Ruivo"
+        "label": "Cabo Ruivo",
+        "geoX": 4747.109616666667,
+        "geoY": 3813.8718277678113
       },
       {
         "id": "256975177",
-        "label": "Oriente"
+        "label": "Oriente",
+        "geoX": 4747.223,
+        "geoY": 3813.697943331634
       },
       {
         "id": "1110776435",
-        "label": "São Sebastião"
+        "label": "São Sebastião",
+        "geoX": 4745.740463888889,
+        "geoY": 3814.8817034237914
       },
       {
         "id": "1829104217",
-        "label": "Aeroporto"
+        "label": "Aeroporto",
+        "geoX": 4746.431391666667,
+        "geoY": 3813.6529998460464
       },
       {
         "id": "1831350950",
-        "label": "Encarnação"
+        "label": "Encarnação",
+        "geoX": 4746.788152777778,
+        "geoY": 3813.436572385611
       },
       {
         "id": "1831350952",
-        "label": "Moscavide"
+        "label": "Moscavide",
+        "geoX": 4747.139041666666,
+        "geoY": 3813.4469906841323
       },
       {
         "id": "5190744730",
-        "label": "Saldanha"
+        "label": "Saldanha",
+        "geoX": 4745.982288888889,
+        "geoY": 3814.8619254849305
       },
       {
         "id": "5190744732",
-        "label": "Alameda"
+        "label": "Alameda",
+        "geoX": 4746.310127777778,
+        "geoY": 3814.7814233424015
       },
       {
         "id": "245938001",
-        "label": "Telheiras"
+        "label": "Telheiras",
+        "geoX": 4745.3695472222225,
+        "geoY": 3813.975809316511
       },
       {
         "id": "256673563",
-        "label": "Cais do Sodré"
+        "label": "Cais do Sodré",
+        "geoX": 4745.975663888889,
+        "geoY": 3815.9034268409455
       },
       {
         "id": "256673579",
-        "label": "Rossio"
+        "label": "Rossio",
+        "geoX": 4746.163375,
+        "geoY": 3815.612083250528
       },
       {
         "id": "256674870",
-        "label": "Anjos"
+        "label": "Anjos",
+        "geoX": 4746.251636111111,
+        "geoY": 3815.1779445861907
       },
       {
         "id": "256675147",
-        "label": "Arroios"
+        "label": "Arroios",
+        "geoX": 4746.271591666667,
+        "geoY": 3814.9198700666075
       },
       {
         "id": "256971868",
-        "label": "Roma"
+        "label": "Roma",
+        "geoX": 4746.0671,
+        "geoY": 3814.380099633171
       },
       {
         "id": "256971869",
-        "label": "Alvalade"
+        "label": "Alvalade",
+        "geoX": 4746.000619444444,
+        "geoY": 3814.2246331589745
       },
       {
         "id": "265897891",
-        "label": "Martim Moniz"
+        "label": "Martim Moniz",
+        "geoX": 4746.225152777778,
+        "geoY": 3815.5106784726618
       },
       {
         "id": "265897892",
-        "label": "Intendente"
+        "label": "Intendente",
+        "geoX": 4746.241622222222,
+        "geoY": 3815.307458025817
       },
       {
         "id": "1465237705",
-        "label": "Areeiro"
+        "label": "Areeiro",
+        "geoX": 4746.29455,
+        "geoY": 3814.6041429856864
       },
       {
         "id": "5185768824",
-        "label": "Baixa-Chiado"
+        "label": "Baixa-Chiado",
+        "geoX": 4746.134191666667,
+        "geoY": 3815.7351277728444
       },
       {
         "id": "5216412760",
-        "label": "Campo Grande"
+        "label": "Campo Grande",
+        "geoX": 4745.614527777778,
+        "geoY": 3813.9697748052176
       },
       {
         "id": "146311452",
-        "label": "Odivelas"
+        "label": "Odivelas",
+        "geoX": 4745.194438888889,
+        "geoY": 3812.791406221329
       },
       {
         "id": "146311461",
-        "label": "Senhor Roubado"
+        "label": "Senhor Roubado",
+        "geoX": 4745.226536111111,
+        "geoY": 3813.062885668681
       },
       {
         "id": "245937922",
-        "label": "Ameixoeira"
+        "label": "Ameixoeira",
+        "geoX": 4745.5706361111115,
+        "geoY": 3813.2767295236677
       },
       {
         "id": "245937941",
-        "label": "Lumiar"
+        "label": "Lumiar",
+        "geoX": 4745.552416666666,
+        "geoY": 3813.522970998588
       },
       {
         "id": "245937950",
-        "label": "Quinta das Conchas"
+        "label": "Quinta das Conchas",
+        "geoX": 4745.679205555556,
+        "geoY": 3813.71097910953
       },
       {
         "id": "246763946",
-        "label": "Cidade Universitária"
+        "label": "Cidade Universitária",
+        "geoX": 4745.585983333333,
+        "geoY": 3814.2844693579714
       },
       {
         "id": "246763964",
-        "label": "Entrecampos"
+        "label": "Entrecampos",
+        "geoX": 4745.882944444445,
+        "geoY": 3814.437862865463
       },
       {
         "id": "246763968",
-        "label": "Campo Pequeno"
+        "label": "Campo Pequeno",
+        "geoX": 4745.9223694444445,
+        "geoY": 3814.6491907464087
       },
       {
         "id": "247051835",
-        "label": "Marquês de Pombal"
+        "label": "Marquês de Pombal",
+        "geoX": 4745.839180555556,
+        "geoY": 3815.2082415304317
       },
       {
         "id": "247051839",
-        "label": "Rato"
+        "label": "Rato",
+        "geoX": 4745.697958333333,
+        "geoY": 3815.3988629517676
       },
       {
         "id": "265896596",
-        "label": "Picoas"
+        "label": "Picoas",
+        "geoX": 4745.929861111111,
+        "geoY": 3815.0092734881687
       },
       {
         "id": "256673960",
-        "label": "Terreiro do Paço"
+        "label": "Terreiro do Paço",
+        "geoX": 4746.284033333333,
+        "geoY": 3815.855557124568
       },
       {
         "id": "256673972",
-        "label": "Restauradores"
+        "label": "Restauradores",
+        "geoX": 4746.065644444444,
+        "geoY": 3815.5683519566364
       },
       {
         "id": "256674213",
-        "label": "Parque"
+        "label": "Parque",
+        "geoX": 4745.831094444445,
+        "geoY": 3815.0521776110077
       },
       {
         "id": "256976574",
-        "label": "Praça de Espanha"
+        "label": "Praça de Espanha",
+        "geoX": 4745.576961111111,
+        "geoY": 3814.76927622175
       },
       {
         "id": "256978160",
-        "label": "Jardim Zoológico"
+        "label": "Jardim Zoológico",
+        "geoX": 4745.307966666666,
+        "geoY": 3814.614485272805
       },
       {
         "id": "256978165",
-        "label": "Laranjeiras"
+        "label": "Laranjeiras",
+        "geoX": 4745.1934388888885,
+        "geoY": 3814.3950409822774
       },
       {
         "id": "256978170",
-        "label": "Alto dos Moínhos"
+        "label": "Alto dos Moínhos",
+        "geoX": 4745.005705555555,
+        "geoY": 3814.336425512928
       },
       {
         "id": "256978583",
-        "label": "Colégio Militar/Luz"
+        "label": "Colégio Militar/Luz",
+        "geoX": 4744.7429694444445,
+        "geoY": 3814.210695279128
       },
       {
         "id": "256979289",
-        "label": "Carnide"
+        "label": "Carnide",
+        "geoX": 4744.648636111111,
+        "geoY": 3814.004791870077
       },
       {
         "id": "256981317",
-        "label": "Pontinha"
+        "label": "Pontinha",
+        "geoX": 4744.5321722222225,
+        "geoY": 3813.8977407281573
       },
       {
         "id": "256981321",
-        "label": "Alfornelos"
+        "label": "Alfornelos",
+        "geoX": 4744.323372222222,
+        "geoY": 3813.964648665423
       },
       {
         "id": "256981325",
-        "label": "Amadora Este"
+        "label": "Amadora Este",
+        "geoX": 4743.9356472222225,
+        "geoY": 3814.033816839629
       },
       {
         "id": "600134721",
-        "label": "Avenida"
+        "label": "Avenida",
+        "geoX": 4745.9769166666665,
+        "geoY": 3815.436249265593
       },
       {
         "id": "1696909109",
-        "label": "Santa Apolónia"
+        "label": "Santa Apolónia",
+        "geoX": 4746.599488888889,
+        "geoY": 3815.62541893842
       },
       {
         "id": "4119252201",
-        "label": "Reboleira"
+        "label": "Reboleira",
+        "geoX": 4743.776994444444,
+        "geoY": 3814.25073130403
       }
     ],
     "edges": [
