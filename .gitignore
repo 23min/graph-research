@@ -13,9 +13,9 @@ node_modules/
 .github/skills/
 .github/copilot-instructions.md
 
-# research data
-docs/literature/pdfs/
-docs/private/
+# research data — Dropbox-mounted symlinks and their contents must never be committed
+docs/literature/pdfs
+docs/private
 bench/fixtures/external/cache/
 
 # editor / build

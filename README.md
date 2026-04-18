@@ -20,13 +20,17 @@ The devcontainer:
 - installs Node 22, Python (for `git-filter-repo` and SMAC3 later), and dev dependencies
 - runs `git submodule update --init --recursive`
 - runs `bash .ai/sync.sh` to generate the AI-assistant adapter files
-- bind-mounts `~/Dropbox/graph-research-pdfs` at `/workspaces/research-pdfs` and symlinks `docs/literature/pdfs` to it
+- bind-mounts `~/Dropbox/Research/graph-research-pdfs` at `/workspaces/research-pdfs` and symlinks `docs/literature/pdfs` to it
 
 If the Dropbox mount is absent (CI, remote Codespaces, collaborators without the folder), `docs/literature/pdfs` remains an empty directory. Run `node scripts/fetch-pdfs.mjs` to pull open-access papers from `docs/literature/bibliography.bib`. Paywalled papers are acquired out-of-band and dropped into the mount.
 
 ## Current focus
 
 _TODO: active milestone._
+
+## Contributing
+
+This is a personal research log kept in public. Issues and pull requests are disabled. If something here sparks a thought — a paper I should read, a flaw in an argument, a related result — please open a [Discussion](https://github.com/23min/graph-research/discussions). Happy to talk.
 
 ## License
 
