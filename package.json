@@ -1,0 +1,11 @@
+{
+  "name": "graph-research",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Research project on automated configuration and multi-objective optimization of layered/metro-map graph layout",
+  "scripts": {
+    "test": "echo \"(no tests at repo root — see bench/ after M-V2-01 import)\""
+  },
+  "license": "Apache-2.0"
+}
