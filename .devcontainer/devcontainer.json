@@ -15,7 +15,8 @@
   "remoteUser": "vscode",
   "mounts": [
     "source=/tmp/.claude-mount,target=/home/vscode/.claude,type=bind,consistency=cached",
-    "source=${localEnv:HOME}/Dropbox/graph-research-pdfs,target=/workspaces/research-pdfs,type=bind,consistency=cached"
+    "source=${localEnv:HOME}/Dropbox/graph-research-pdfs,target=/workspaces/research-pdfs,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/Dropbox/graph-research-private,target=/workspaces/research-private,type=bind,consistency=cached"
   ],
   "customizations": {
     "vscode": {

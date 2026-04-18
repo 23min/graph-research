@@ -63,6 +63,8 @@ These values are resolved from framework defaults in .ai/paths.md and repo overr
 
 This repo is a research project on automated configuration and multi-objective optimization of layered and metro-map graph layout algorithms. The rules below keep the work reproducible, citable, and defensible under scrutiny.
 
+> **Reviewer quick-check.** Before approving any commit or PR, grep the diff for `docs/literature/pdfs/` and `docs/private/`. Any occurrence in tracked content blocks the review until resolved (rule 9).
+
 ## 1. Experiments are first-class artefacts
 
 - Every experiment has an `EXP-NN-slug` ID, created at the start and stable forever.
@@ -112,6 +114,12 @@ Results that cannot produce all four are not reported. Sketch / exploratory runs
 - Fallback (CI, collaborators without Dropbox): `node scripts/fetch-pdfs.mjs` pulls open-access PDFs resolved from `bibliography.bib`. Paywalled papers fail gracefully and are listed for manual acquisition.
 - Never commit PDFs.
 
+## 6b. Private notes
+
+- Private notes, drafts, and correspondence live in a Dropbox bind-mount at `~/Dropbox/graph-research-private/` → `/workspaces/research-private` → symlinked at `docs/private/`.
+- Content there is for the author's reading only and is out of band from the public repo.
+- Never commit private notes. See rule 9 for the full isolation protocol.
+
 ## 7. Held-out discipline
 
 - The corpora split (`bench/fixtures/splits.json`) is frozen by content hash. Training-side code must route fixture reads through `bench/fixtures/split-loader.mjs`.
@@ -121,6 +129,33 @@ Results that cannot produce all four are not reported. Sketch / exploratory runs
 ## 8. No unauthorized commits or pushes
 
 Inherited from the framework, re-stated for emphasis: never commit or push without explicit human approval. "Continue" and "ok" do not count. This rule applies equally to research artefact commits.
+
+## 9. Private-source isolation
+
+Two repository directories hold material that is mounted from Dropbox and must **never** be cited from, copied into, or paraphrased in any committed file on this repo:
+
+- `docs/literature/pdfs/` — PDF papers (open-access or personally acquired)
+- `docs/private/` — private notes, drafts, correspondence
+
+Both are bind-mounted via the devcontainer and gitignored.
+
+### The rule
+
+- Committed content (docs, code, commit messages, ADRs, experiment writeups, tracking docs) must not quote, cite, paraphrase, or link to files in these directories.
+- Reference papers by BibTeX key via `bibliography.bib`. The PDF behind the key is out of band.
+- Reference private notes not at all. If a private note contains material that belongs in the public repo, rewrite it from scratch based on first-principles reasoning, not by copying.
+- File paths like `docs/private/<anything>` or `docs/literature/pdfs/<anything>.pdf` must not appear in committed content.
+- This rule applies forward. Content committed before the rule took effect is grandfathered; if any of it turns out to derive from private sources, flag it explicitly and remediate.
+
+### How to apply
+
+- **Author:** before proposing a commit, grep your changes for `docs/private/` and `docs/literature/pdfs/`. If either appears in tracked content, either remove the reference or rewrite the passage without the dependency.
+- **Reviewer:** on every commit or PR review, grep the diff for those two paths. Any occurrence in tracked content blocks the review until resolved. This is a named reviewer task.
+- **Tooling:** a pre-commit hook or CI check can enforce this mechanically when added. Until it exists, rule-level enforcement applies.
+
+### Why
+
+These directories contain material that is either licensed for personal reading but not redistribution (PDFs) or is private to the author (notes). Committing excerpts or citing specific paths either violates license terms or leaks private material. The discipline is blanket: no path from public-repo content to mounted-source content, in either direction.
 
 # TDD Conventions — graph-research
 

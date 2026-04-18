@@ -14,8 +14,8 @@ else
   echo "==> .ai/sync.sh not found — skipping"
 fi
 
-echo "==> Wiring PDF symlink"
-bash scripts/setup-pdfs.sh
+echo "==> Wiring private mount symlinks (pdfs + private notes)"
+bash scripts/setup-private-mounts.sh
 
 if [ -f bench/package.json ]; then
   echo "==> Installing bench npm dependencies"

@@ -15,6 +15,7 @@ node_modules/
 
 # research data
 docs/literature/pdfs/
+docs/private/
 bench/fixtures/external/cache/
 
 # editor / build
