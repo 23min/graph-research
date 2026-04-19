@@ -36,7 +36,7 @@ If the Dropbox mount is absent (CI, remote Codespaces, collaborators without the
 
 ## Current focus
 
-Three-track framework active as of 2026-04-19 (see `docs/decisions/0002-<slug>.md`).
+Three-track framework active as of 2026-04-19 (see `docs/decisions/0002-adopt-three-track-research-framework.md`).
 No active epic at this moment; the next epic is in framing.
 
 ## Contributing

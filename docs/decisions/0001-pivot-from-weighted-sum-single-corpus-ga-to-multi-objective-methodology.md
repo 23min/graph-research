@@ -2,7 +2,7 @@
 
 ## Status
 
-active
+superseded by [0002](0002-adopt-three-track-research-framework.md) — the diagnosis in this ADR remains valid; the prescription (six-milestone methodology epic) is retired
 
 ## Context
 
