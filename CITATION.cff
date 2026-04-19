@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+title: "graph-research — research notebook on DAG layout algorithms"
+message: >-
+  If you reference this work, please cite it as below. Cite specific
+  experiments, decisions, or results by their in-repo path where possible.
+type: software
+authors:
+  - family-names: Bruinsma
+    given-names: Peter
+    email: peterbru@gmail.com
+    # orcid: "https://orcid.org/NNNN-NNNN-NNNN-NNNN"  # add if available
+repository-code: "https://github.com/23min/graph-research"
+url: "https://github.com/23min/graph-research"
+abstract: >-
+  A personal research notebook on graph drawing algorithms, focused on
+  layered and metro-map DAG layout. The repository holds experiments,
+  literature notes, architectural decisions, and the bench harness used
+  to evaluate the dag-map layout library (maintained as a submodule).
+  Kept in public as a lab notebook rather than a polished publication.
+keywords:
+  - graph-drawing
+  - dag-layout
+  - metro-map
+  - sugiyama
+  - graph-visualization
+  - research-notebook
+license: Apache-2.0
+license-url: "https://www.apache.org/licenses/LICENSE-2.0"
+# Version and date-released are updated at each public release or
+# significant milestone. For unreleased in-progress work, leave as the
+# latest-snapshot conventions below.
+version: 0.0.1-alpha
+date-released: 2026-04-19
