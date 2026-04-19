@@ -37,17 +37,9 @@ Run these before every commit to main. Any occurrence in **tracked content** blo
 3. `grep -rn "research-pdfs" <files-to-commit>` — bind-mount alias for PDF folder.
 4. `grep -rn "research-private" <files-to-commit>` — bind-mount alias for private folder.
 
-Exceptions (files that may legitimately reference these paths — because they document or enforce the isolation rule itself):
+Authoritative allow-list: `scripts/git-hooks/pre-commit` `ALLOWED_PATHS`. The pre-commit hook enforces the boundary mechanically on staged content; this skill re-runs the same check during epic wrap as a sanity pass and as a doc-gardening step for files the hook may not have been run against (e.g. if the hook wasn't activated in this clone).
 
-- `.gitignore`
-- `CLAUDE.md`
-- `.ai/rules.md`
-- `.ai-repo/rules/research.md`
-- `.ai-repo/skills/*.md` — these skills implement the boundary and must name the paths they enforce
-- `docs/README.md` — may reference `docs/private/` as a documented convention
-- `docs/glossary.md` — may define the boundary terms
-
-All other tracked files: block on match.
+Any file whose path starts with one of those entries is allowed to reference the boundary paths (because it documents or enforces the rule). All other tracked files: block on match.
 
 ## Public/private boundary
 

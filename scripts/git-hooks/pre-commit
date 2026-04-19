@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# Enforces private-source isolation (rule 9 in .ai-repo/rules/research.md).
+# Blocks any commit that adds references to docs/private/ or docs/literature/pdfs/
+# from files outside the allow-list.
+#
+# Scope: staged added/modified/renamed files. Only newly-added diff lines are
+# inspected; pre-existing references in un-touched lines are grandfathered.
+
+set -euo pipefail
+
+ALLOWED_PATHS=(
+  "CLAUDE.md"
+  ".ai/rules.md"
+  ".ai/paths.md"
+  ".ai-repo/rules/"
+  ".ai-repo/skills/"
+  ".claude/rules/"
+  ".github/"
+  "docs/README.md"
+  "docs/literature/README.md"
+  "docs/methodology/three-track-workflow.md"
+  "docs/decisions/"
+  "scripts/git-hooks/"
+  ".gitignore"
+  ".gitattributes"
+)
+
+is_allowed() {
+  local path="$1"
+  for allowed in "${ALLOWED_PATHS[@]}"; do
+    case "$path" in
+      "$allowed"*) return 0 ;;
+    esac
+  done
+  return 1
+}
+
+violations=()
+
+while IFS= read -r file; do
+  [ -z "$file" ] && continue
+  if is_allowed "$file"; then
+    continue
+  fi
+  added=$(git diff --cached -U0 -- "$file" | grep -E '^\+[^+]' || true)
+  if [ -z "$added" ]; then
+    continue
+  fi
+  if printf '%s\n' "$added" | grep -qE '(docs/private/|docs/literature/pdfs/)'; then
+    violations+=("$file")
+  fi
+done < <(git diff --cached --name-only --diff-filter=AMR)
+
+if [ "${#violations[@]}" -gt 0 ]; then
+  {
+    echo "ERROR: private-source isolation violation (rule 9)."
+    echo ""
+    echo "The following staged files add references to docs/private/ or docs/literature/pdfs/:"
+    for f in "${violations[@]}"; do
+      echo "  - $f"
+    done
+    echo ""
+    echo "Committed content must not cite, link to, or paraphrase those paths."
+    echo "- Reference papers by BibTeX key via docs/literature/bibliography.bib."
+    echo "- Rewrite private notes from scratch if the material belongs in public."
+    echo ""
+    echo "If this file is a legitimate rule/doc exception, add it to ALLOWED_PATHS"
+    echo "in scripts/git-hooks/pre-commit. To bypass once (discouraged), use"
+    echo "'git commit --no-verify' and document why in the commit message."
+  } >&2
+  exit 1
+fi
+
+exit 0

@@ -1,16 +1,24 @@
 # graph-research
 
-A personal research notebook on graph drawing, with a focus on layered
-and metro-map layout of directed acyclic graphs. This repository holds
-experiments, literature notes, architectural decisions, and a bench
-harness used to evaluate the [`dag-map`](https://github.com/23min/DAG-map)
-layout library (maintained here as a submodule).
+A public research log on the automatic layout of flow-structured graphs
+— DAGs, process flows, transit-style schematic networks — with an
+emphasis on aesthetics as a first-class algorithmic property rather
+than a stylesheet applied afterwards.
+
+The working hypothesis is that the class of diagrams I keep needing —
+flows with named routes, a direction of travel, and shared interchanges
+— is underserved by off-the-shelf layout libraries (Dagre, ELK,
+Graphviz) and by the metro-map literature it borrows from. Each
+community has part of the picture; none has the full problem. The
+companion library [`dag-map`](https://github.com/23min/DAG-map) is the
+implementation surface; this repo is the lab notebook around it:
+corpora, experiments, decisions, literature notes, and write-ups.
 
 Work proceeds under a three-track process — library engineering,
-scientific experiments, and public writeups — codified in the skills
-under `.ai-repo/skills/` and anchored in `docs/decisions/0002`. The
-repository is kept in public as a lab notebook: rigorous for the
-author, not polished for reviewers.
+scientific experiments, and public writeups — recorded in
+`docs/decisions/0002-adopt-three-track-research-framework.md`.
+Reproducibility is first-class: every reported result carries seed +
+config + code SHA + split-version hash.
 
 ## Structure
 
@@ -36,8 +44,9 @@ If the Dropbox mount is absent (CI, remote Codespaces, collaborators without the
 
 ## Current focus
 
-Three-track framework active as of 2026-04-19 (see `docs/decisions/0002-adopt-three-track-research-framework.md`).
-No active epic at this moment; the next epic is in framing.
+No active epic as of 2026-04-19. The operating frame is recorded in
+`docs/decisions/0002-adopt-three-track-research-framework.md` and
+`work/roadmap.md`. The next epic is in framing.
 
 ## Contributing
 
