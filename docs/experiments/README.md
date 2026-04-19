@@ -6,7 +6,7 @@ Each experiment lives in its own directory keyed by ID.
 
 | ID | Title | Status |
 |----|-------|--------|
-| EXP-01 | Weighted-sum cycling (v1 negative result) | planned for import during graph-research migration |
+| EXP-01 | Weighted-sum cycling (v1 negative result) | closed-negative |
 
 ## Directory template
 

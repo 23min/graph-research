@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Stockholm — Process Bezier (Mode 2.5)</title><style>
+    @page { size: A2 landscape; margin: 15mm; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; color: black;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+    .page { width: 100%; height: 100vh; display: flex; flex-direction: column;
+      page-break-after: auto; overflow: hidden; }
+    h1 { margin: 0 0 3mm; font-size: 13pt; font-weight: 600;
+      letter-spacing: 0.02em; flex: 0 0 auto; }
+    h1 .sub { font-weight: 400; color: #555; font-size: 9pt; margin-left: 6mm; }
+    .matrix {
+      display: grid;
+      grid-template-columns: 28mm repeat(1, 1fr);
+      grid-template-rows: 18mm repeat(1, 1fr);
+      gap: 1mm;
+      flex: 1 1 auto; min-height: 0;
+    }
+    .corner { /* top-left empty cell */ }
+    .col-header {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11pt; font-weight: 600; text-align: center;
+      border-bottom: 0.6px solid #666; background: white;
+      padding: 2mm; line-height: 1.2;
+    }
+    .row-label {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9pt; font-weight: 600; text-align: center;
+      border-right: 0.6px solid #666; background: white;
+      padding: 2mm; line-height: 1.2;
+    }
+    .cell {
+      border: 0.4px solid #ccc; background: white;
+      display: flex; flex-direction: column;
+      min-width: 0; min-height: 0; overflow: hidden;
+    }
+    .cell .svg-wrap {
+      flex: 1 1 auto; min-height: 0;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; padding: 1mm;
+    }
+    .cell .svg-wrap svg {
+      display: block; width: 100%; height: 100%;
+      max-width: 100%; max-height: 100%; background: white;
+    }
+    .cell .error-note {
+      color: #999; font-size: 9pt; padding: 3mm; text-align: center;
+    }
+    .cell .meta {
+      font-size: 6.5pt; color: #888; padding: 0.5mm 2mm;
+      font-family: ui-monospace, monospace;
+      border-top: 0.3px solid #eee; flex: 0 0 auto;
+    }
+  </style></head>
+<body>
+  <section class="page">
+    <h1>Stockholm — Process Bezier (Mode 2.5)<span class="sub">A2 · landscape · 1×1 matrix</span></h1>
+    <div class="matrix"><div class="corner"></div>
+<div class="col-header">Process Bezier</div>
+<div class="row-label">Stockholm</div>
+<div class="cell">
+      <div class="svg-wrap"><svg style="display:block;width:100%;height:100%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11076.61921620642 2496.593421097949" width="100%" height="100%" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif">
+<rect width="11076.61921620642" height="2496.593421097949" fill="#FFFFFF"/>
+<path d="M 1204.3 293.3 L 1768.9 293.3" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 1768.9 291.5 L 1783.9 291.5 Q 1810.3 291.5, 1836.7 317.9 L 1909.3 390.5 Q 1935.7 416.9, 1962.1 416.9 L 2495.5 416.9" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 2495.5 416.9 L 2511.1 416.9 Q 2537.5 416.9, 2563.9 443.3 L 2680.3 559.7 Q 2706.7 586.1, 2733.1 586.1 L 3023.0 586.1" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3023.0 586.1 L 3038.0 586.1 Q 3064.4 586.1, 3090.8 612.5 L 3140.2 661.9 Q 3166.6 688.3, 3193.0 688.3 L 3665.8 688.3" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3665.8 688.3 L 3711.6 688.3 Q 3738.0 688.3, 3764.4 714.7 L 3804.2 754.6 Q 3830.6 781.0, 3857.1 781.0 L 4060.6 781.0" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4060.6 781.0 L 4106.7 781.0 Q 4133.1 781.0, 4159.5 807.4 L 4190.7 838.6 Q 4217.1 865.0, 4243.5 865.0 L 4442.4 865.0" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4442.4 865.0 L 4678.1 865.0 Q 4704.5 865.0, 4730.9 891.4 L 4749.1 909.6 Q 4775.5 936.0, 4801.9 936.0 L 4867.5 936.0" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4867.5 936.0 L 5061.9 936.0 C 5070.3 936.0, 5070.3 944.4, 5078.7 944.4 L 5273.2 944.4" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5273.2 944.4 L 5478.2 944.4 Q 5504.6 944.4, 5531.0 970.8 L 5582.0 1021.7 Q 5608.4 1048.1, 5634.7 1048.1 L 5863.3 1048.1" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5863.3 1048.1 L 6795.6 1048.1 Q 6822.0 1048.1, 6848.4 1074.5 L 6887.4 1113.5 Q 6913.8 1139.9, 6940.2 1139.9 L 7004.8 1139.9" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7004.8 1139.9 L 7034.2 1139.9 C 7080.1 1139.9, 7080.1 1094.0, 7126.0 1094.0 L 7631.8 1094.0" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7631.8 1094.0 L 7697.9 1094.0 C 7747.4 1094.0, 7747.4 1044.5, 7796.9 1044.5 L 8274.1 1044.5" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8274.1 1044.5 L 8486.4 1044.5 C 8499.7 1044.5, 8499.7 1057.8, 8512.9 1057.8 L 8725.2 1057.8" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 1546.4 169.4 L 1561.4 169.4 C 1576.1 169.4, 1576.1 214.5, 1590.8 214.5 L 2139.8 214.5" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 2139.8 214.5 L 2434.6 214.5 Q 2461.0 214.5, 2487.4 240.9 L 2560.0 313.5 Q 2586.4 339.9, 2612.8 339.9 L 2688.2 339.9" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 2688.2 339.9 L 2974.2 339.9 Q 3000.6 339.9, 3027.0 366.3 L 3297.4 636.7 Q 3323.8 663.1, 3350.2 663.1 L 3428.8 663.1" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3428.8 663.1 L 3443.8 663.1 Q 3470.2 663.1, 3496.6 689.5 L 3546.0 738.9 Q 3572.4 765.3, 3598.8 765.3 L 3907.7 765.3" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3907.7 765.3 L 3922.7 765.3 Q 3949.1 765.3, 3975.5 791.7 L 4023.0 839.2 Q 4049.4 865.6, 4075.8 865.6 L 4494.6 865.6" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4494.6 865.6 L 4555.8 865.6 Q 4582.2 865.6, 4608.6 892.0 L 4661.0 944.4 Q 4687.4 970.8, 4713.8 970.8 L 5273.2 970.8" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5273.2 970.8 L 5288.2 970.8 Q 5314.6 970.8, 5341.0 997.2 L 5391.9 1048.1 Q 5418.3 1074.5, 5444.7 1074.5 L 5863.3 1074.5" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5863.3 1074.5 L 6590.1 1074.5 Q 6616.5 1074.5, 6642.9 1100.9 L 6681.9 1139.9 Q 6708.3 1166.3, 6734.7 1166.3 L 7004.8 1166.3" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7004.8 1166.3 L 7109.4 1166.3 C 7155.3 1166.3, 7155.3 1120.4, 7201.2 1120.4 L 7631.8 1120.4" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7631.8 1120.4 L 7775.0 1120.4 C 7824.5 1120.4, 7824.5 1070.9, 7874.0 1070.9 L 8274.1 1070.9" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8274.1 1070.9 L 8486.4 1070.9 C 8499.7 1070.9, 8499.7 1084.2, 8512.9 1084.2 L 8725.2 1084.2" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 185.8 1930.4 L 738.4 1930.4" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 738.4 1928.6 L 753.4 1928.6 Q 779.8 1928.6, 806.2 1955.0 L 852.8 2001.6 Q 879.2 2028.0, 905.6 2028.0 L 1372.2 2028.0" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 1372.2 2028.0 L 1387.2 2028.0 C 1400.9 2028.0, 1400.9 1976.1, 1414.6 1976.1 L 1945.8 1976.1" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 1945.8 1976.1 L 2125.9 1976.1 C 2158.1 1976.1, 2158.1 2008.3, 2190.3 2008.3 L 2535.6 2008.3" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 2535.6 2008.3 L 2607.6 2008.3 Q 2634.0 2008.3, 2660.4 1981.9 L 2785.4 1856.9 Q 2811.8 1830.5, 2838.2 1830.5 L 2858.6 1830.5" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 2858.6 1830.5 L 2988.5 1830.5 Q 3014.9 1830.5, 3041.3 1804.1 L 3114.9 1730.5 Q 3141.3 1704.1, 3167.7 1704.1 L 3315.9 1704.1" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3315.9 1704.1 L 3785.2 1704.1" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3785.2 1721.2 L 3800.2 1721.2 Q 3826.6 1721.2, 3853.0 1694.8 L 3883.3 1664.5 Q 3909.7 1638.1, 3936.1 1638.1 L 4184.1 1638.1" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4184.1 1638.1 L 4289.8 1638.1 Q 4316.2 1638.1, 4342.6 1611.7 L 4382.4 1571.8 Q 4408.8 1545.4, 4435.2 1545.4 L 4555.8 1545.4" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4555.8 1545.4 L 4570.8 1545.4 Q 4597.2 1545.4, 4623.6 1519.0 L 4677.8 1464.8 Q 4704.2 1438.4, 4730.6 1438.4 L 5114.8 1438.4" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5114.8 1438.4 L 5301.6 1438.4 C 5334.7 1438.4, 5334.7 1405.3, 5367.8 1405.3 L 5572.9 1405.3" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5572.9 1405.3 L 5942.6 1405.3" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5942.6 1405.3 L 6302.9 1405.3" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 6302.9 1384.2 L 6397.6 1384.2 Q 6424.0 1384.2, 6450.4 1357.8 L 6451.6 1356.6 Q 6478.0 1330.2, 6504.4 1330.2 L 6611.4 1330.2" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 6611.4 1330.2 L 6627.7 1330.2 C 6679.1 1330.2, 6679.1 1278.8, 6730.5 1278.8 L 7175.5 1278.8" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7175.5 1278.8 L 7482.2 1278.8 C 7510.4 1278.8, 7510.4 1307.0, 7538.6 1307.0 L 7752.9 1307.0" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7752.9 1307.0 L 8094.0 1307.0 Q 8120.4 1307.0, 8146.7 1280.6 L 8147.5 1279.9 Q 8173.9 1253.5, 8200.2 1253.5 L 8316.1 1253.5" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8316.1 1253.5 L 8594.7 1253.5 Q 8621.1 1253.5, 8647.4 1279.9 L 8663.4 1295.8 Q 8689.8 1322.2, 8716.2 1322.2 L 9124.0 1322.2" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8274.1 1097.3 L 8631.3 1097.3 C 8662.7 1097.3, 8662.7 1128.7, 8694.1 1128.7 L 8715.7 1128.7" fill="none" stroke="#2678b2" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8715.7 1128.7 L 8968.4 1128.7 Q 8994.8 1128.7, 9021.2 1102.3 L 9103.4 1020.1 Q 9129.8 993.7, 9156.2 993.7 L 9437.8 993.7" fill="none" stroke="#2678b2" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 9437.8 993.7 L 9808.1 993.7" fill="none" stroke="#2678b2" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 9808.1 996.8 L 9871.3 996.8 Q 9897.7 996.8, 9924.1 970.4 L 9985.4 909.1 Q 10011.8 882.7, 10038.2 882.7 L 10053.2 882.7" fill="none" stroke="#2678b2" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8274.1 1229.3 L 8298.6 1229.3 Q 8325.0 1229.3, 8351.4 1255.7 L 8407.7 1312.0 Q 8434.1 1338.4, 8460.4 1338.4 L 8713.5 1338.4" fill="none" stroke="#c4782a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8713.5 1232.8 L 9040.4 1232.8 C 9074.7 1232.8, 9074.7 1269.4, 9109.0 1269.4 L 9124.0 1269.4" fill="none" stroke="#5d6cc1" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 2245.9 1581.1 L 2380.7 1581.1 Q 2407.1 1581.1, 2433.5 1554.7 L 2451.5 1536.7 Q 2477.9 1510.3, 2504.3 1510.3 L 2655.6 1510.3" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 2655.6 1510.3 L 2807.4 1510.3 C 2840.4 1510.3, 2840.4 1543.3, 2873.4 1543.3 L 3169.1 1543.3" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3169.1 1543.3 L 3859.1 1543.3" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3859.1 1543.3 L 4651.0 1543.1" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4651.0 1543.1 L 6256.5 1543.1 Q 6282.9 1543.1, 6309.2 1516.7 L 6443.0 1383.0 Q 6469.4 1356.6, 6495.7 1356.6 L 6611.4 1356.6" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 6611.4 1356.6 L 6796.9 1356.6 C 6848.3 1356.6, 6848.3 1305.2, 6899.7 1305.2 L 7175.5 1305.2" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7175.5 1305.2 L 7216.6 1305.2 C 7244.8 1305.2, 7244.8 1333.4, 7273.0 1333.4 L 7752.9 1333.4" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7752.9 1333.4 L 8161.6 1333.4 Q 8187.9 1333.4, 8214.3 1307.0 L 8215.1 1306.3 Q 8241.4 1279.9, 8267.8 1279.9 L 8316.1 1279.9" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8316.1 1279.9 L 8497.7 1279.9 Q 8524.1 1279.9, 8550.4 1306.3 L 8566.4 1322.2 Q 8592.8 1348.6, 8619.2 1348.6 L 9124.0 1348.6" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3214.2 545.2 L 3493.3 545.2 C 3532.3 545.2, 3532.3 584.2, 3571.3 584.2 L 3602.1 584.2" fill="none" stroke="#c94040" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3233.4 771.4 L 3248.4 771.4 Q 3274.8 771.4, 3301.2 745.0 L 3409.2 637.0 Q 3435.6 610.6, 3462.0 610.6 L 3602.1 610.6" fill="none" stroke="#8a6d3b" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8274.1 1123.7 L 8551.8 1123.7 C 8583.2 1123.7, 8583.2 1155.1, 8614.6 1155.1 L 8715.7 1155.1" fill="none" stroke="#607d8b" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8715.7 1155.1 L 8728.1 1155.1 Q 8754.5 1155.1, 8780.9 1128.7 L 8799.3 1110.3 Q 8825.7 1083.9, 8852.1 1083.9 L 8839.6 1083.9" fill="none" stroke="#607d8b" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8274.1 1255.7 L 8377.7 1255.7 Q 8404.1 1255.7, 8430.4 1282.1 L 8486.7 1338.4 Q 8513.1 1364.8, 8539.5 1364.8 L 8713.5 1364.8" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8713.5 1259.2 L 8964.2 1259.2 C 9000.8 1259.2, 9000.8 1295.8, 9037.4 1295.8 L 9124.0 1295.8" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3233.4 797.8 L 3248.4 797.8 Q 3274.8 797.8, 3301.2 824.2 L 3386.6 909.6 Q 3413.0 936.0, 3439.4 936.0 L 3955.1 936.0" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3955.1 909.6 L 4339.9 909.6 Q 4366.3 909.6, 4392.7 936.0 L 4562.5 1105.8 Q 4588.9 1132.2, 4615.3 1132.2 L 5199.1 1132.2" fill="none" stroke="#2678b2" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5199.1 1158.6 L 6214.2 1158.6 Q 6240.6 1158.6, 6267.0 1132.2 L 6315.4 1083.9 Q 6341.7 1057.5, 6368.1 1057.5 L 8839.6 1057.5" fill="none" stroke="#c4782a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4224.1 1135.0 L 4360.5 1135.0 C 4398.5 1135.0, 4398.5 1173.0, 4436.5 1173.0 L 4639.3 1173.0" fill="none" stroke="#5d6cc1" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4639.3 1173.0 L 4718.2 1173.0 C 4746.5 1173.0, 4746.5 1144.7, 4774.8 1144.7 L 5086.2 1144.7" fill="none" stroke="#5d6cc1" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5086.2 1144.7 L 5100.8 1144.7 C 5104.8 1144.7, 5104.8 1163.6, 5108.8 1163.6 L 5458.7 1163.6" fill="none" stroke="#5d6cc1" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5458.7 1163.6 L 5660.8 1163.6 C 5664.8 1163.6, 5664.8 1161.8, 5668.8 1161.8 L 5870.9 1161.8" fill="none" stroke="#5d6cc1" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5870.9 1161.8 L 6105.4 1161.8 C 6113.6 1161.8, 6113.6 1170.0, 6121.8 1170.0 L 6356.3 1170.0" fill="none" stroke="#5d6cc1" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 6356.3 1170.0 L 6511.0 1170.0 C 6521.6 1170.0, 6521.6 1180.6, 6532.2 1180.6 L 6686.9 1180.6" fill="none" stroke="#5d6cc1" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 6686.9 1180.6 L 6833.7 1180.6 C 6845.9 1180.6, 6845.9 1192.7, 6858.0 1192.7 L 7004.8 1192.7" fill="none" stroke="#5d6cc1" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7004.8 1192.7 L 7237.2 1192.7 C 7272.1 1192.7, 7272.1 1157.8, 7307.0 1157.8 L 7561.6 1157.8" fill="none" stroke="#5d6cc1" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7561.6 1157.8 L 7913.8 1157.8 Q 7940.2 1157.8, 7966.6 1131.4 L 7978.0 1120.0 Q 8004.4 1093.6, 8030.8 1093.6 L 8101.9 1093.6" fill="none" stroke="#5d6cc1" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8101.9 1093.6 L 8142.2 1093.6 Q 8168.6 1093.6, 8194.9 1120.0 L 8241.1 1166.1 Q 8267.4 1192.5, 8293.8 1192.5 L 8585.4 1192.5" fill="none" stroke="#5d6cc1" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8585.4 1192.5 L 8828.6 1192.5 C 8853.1 1192.5, 8853.1 1217.0, 8877.6 1217.0 L 8937.6 1217.0" fill="none" stroke="#5d6cc1" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8274.1 1282.1 L 8445.8 1282.1 C 8449.8 1282.1, 8449.8 1285.6, 8453.8 1285.6 L 8713.5 1285.6" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8713.5 1285.6 L 8839.4 1285.6 Q 8865.8 1285.6, 8892.2 1312.0 L 8928.8 1348.6 Q 8955.2 1375.0, 8981.6 1375.0 L 9124.0 1375.0" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 9124.0 1375.0 L 9149.2 1375.0 C 9182.9 1375.0, 9182.9 1341.3, 9216.6 1341.3 L 9451.4 1341.3" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 9451.4 1341.3 L 9463.1 1341.3 Q 9489.4 1341.3, 9515.8 1367.7 L 9526.8 1378.7 Q 9553.2 1405.1, 9579.6 1405.1 L 9567.9 1405.1" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 9567.9 1405.1 L 9649.2 1405.1 C 9653.2 1405.1, 9653.2 1436.0, 9657.2 1436.0 L 9664.8 1436.0" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 9664.8 1436.0 L 10048.6 1436.0 Q 10075.0 1436.0, 10101.4 1462.4 L 10112.4 1473.4 Q 10138.8 1499.8, 10165.2 1499.8 L 10296.3 1499.8" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 10296.3 1499.8 L 10604.3 1499.0" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 10604.3 1499.0 L 10709.4 1499.0 C 10713.4 1499.0, 10713.4 1521.2, 10717.4 1521.2 L 10728.3 1521.2" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4284.7 1824.9 L 4746.9 1824.9 C 4773.6 1824.9, 4773.6 1851.6, 4800.3 1851.6 L 4880.9 1851.6" fill="none" stroke="#c94040" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4880.9 1851.6 L 4937.4 1851.6 Q 4963.8 1851.6, 4990.2 1878.0 L 5036.8 1924.6 Q 5063.2 1951.0, 5089.6 1951.0 L 5196.6 1951.0" fill="none" stroke="#c94040" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4284.7 1798.5 L 9803.2 1798.5 Q 9829.6 1798.5, 9855.9 1772.1 L 10054.1 1574.0 Q 10080.5 1547.6, 10106.9 1547.6 L 10728.3 1547.6" fill="none" stroke="#8a6d3b" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8274.1 1150.1 L 8618.4 1150.1 C 8658.9 1150.1, 8658.9 1190.6, 8699.4 1190.6 L 8937.6 1190.6" fill="none" stroke="#607d8b" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5870.9 1188.2 L 6105.4 1188.2 C 6113.6 1188.2, 6113.6 1196.4, 6121.8 1196.4 L 6356.3 1196.4" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 6356.3 1196.4 L 6511.0 1196.4 C 6521.6 1196.4, 6521.6 1207.0, 6532.2 1207.0 L 6686.9 1207.0" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 6686.9 1207.0 L 6833.8 1207.0 C 6845.9 1207.0, 6845.9 1219.1, 6857.9 1219.1 L 7004.8 1219.1" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7004.8 1219.1 L 7203.8 1219.1 C 7238.7 1219.1, 7238.7 1184.2, 7273.6 1184.2 L 7561.6 1184.2" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7561.6 1184.2 L 7730.1 1184.2 Q 7756.5 1184.2, 7782.9 1157.8 L 7794.3 1146.4 Q 7820.7 1120.0, 7847.1 1120.0 L 8101.9 1120.0" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8101.9 1120.0 L 8116.9 1120.0 Q 8143.3 1120.0, 8169.7 1146.4 L 8215.8 1192.5 Q 8242.2 1218.9, 8268.6 1218.9 L 8585.4 1218.9" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8585.4 1218.9 L 8687.7 1218.9 C 8712.2 1218.9, 8712.2 1243.4, 8736.7 1243.4 L 8937.6 1243.4" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8274.1 1308.5 L 8489.8 1308.5 C 8493.8 1308.5, 8493.8 1312.0, 8497.8 1312.0 L 8713.5 1312.0" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8713.5 1312.0 L 8728.5 1312.0 Q 8754.9 1312.0, 8781.3 1338.4 L 8817.9 1375.0 Q 8844.3 1401.4, 8870.7 1401.4 L 9124.0 1401.4" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 9124.0 1401.4 L 9260.5 1401.4 C 9294.2 1401.4, 9294.2 1367.7, 9327.9 1367.7 L 9451.4 1367.7" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 9451.4 1367.7 L 9463.1 1367.7 Q 9489.4 1367.7, 9515.8 1394.1 L 9526.8 1405.1 Q 9553.2 1431.5, 9579.6 1431.5 L 9567.9 1431.5" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 9567.9 1431.5 L 9577.6 1431.5 Q 9604.0 1431.5, 9630.4 1457.9 L 9634.9 1462.4 Q 9661.3 1488.8, 9687.7 1488.8 L 9664.8 1488.8" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 9664.8 1488.8 L 9993.7 1488.8 C 10031.1 1488.8, 10031.1 1526.2, 10068.5 1526.2 L 10296.3 1526.2" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 10296.3 1526.2 L 10311.3 1526.2 Q 10337.7 1526.2, 10364.1 1552.6 L 10443.1 1631.6 Q 10469.5 1658.0, 10495.9 1658.0 L 10494.1 1658.0" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 10494.1 1658.0 L 10506.3 1658.0 Q 10532.7 1658.0, 10559.1 1684.4 L 10562.0 1687.3 Q 10588.4 1713.7, 10614.8 1713.7 L 10615.8 1713.7" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3843.9 2112.4 L 4154.3 2112.4 C 4182.9 2112.4, 4182.9 2141.0, 4211.5 2141.0 L 4229.1 2141.0" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4229.1 2141.0 L 4244.1 2141.0 Q 4270.5 2141.0, 4296.9 2167.4 L 4369.8 2240.3 Q 4396.2 2266.7, 4422.6 2266.7 L 4728.3 2266.7" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4728.3 2266.7 L 5158.9 2266.7" fill="none" stroke="#d4456a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8274.1 1176.5 L 8705.3 1176.5 Q 8731.7 1176.5, 8758.1 1202.9 L 8798.6 1243.4 Q 8824.9 1269.8, 8851.3 1269.8 L 8937.6 1269.8" fill="none" stroke="#2678b2" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3843.9 2086.0 L 5110.6 2086.0 C 5145.8 2086.0, 5145.8 2050.8, 5181.0 2050.8 L 5323.3 2050.8" fill="none" stroke="#c4782a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5323.3 2077.2 L 9150.7 2077.2 Q 9177.1 2077.2, 9203.4 2050.8 L 9487.7 1766.5 Q 9514.1 1740.1, 9540.5 1740.1 L 10615.8 1740.1" fill="none" stroke="#5d6cc1" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 451.6 1189.7 L 992.3 1189.7" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 992.3 1180.6 L 1106.9 1180.6 Q 1133.3 1180.6, 1159.7 1154.2 L 1219.1 1094.8 Q 1245.5 1068.4, 1271.9 1068.4 L 1539.9 1068.4" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 1539.9 1068.4 L 2083.6 1068.4" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 2083.6 1048.8 L 2260.6 1048.8 C 2303.4 1048.8, 2303.4 1091.6, 2346.2 1091.6 L 2541.6 1091.6" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 2541.6 1091.6 L 2845.7 1091.6" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 2845.7 1091.6 L 3367.9 1091.6" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3367.9 1087.7 L 3514.3 1087.7 Q 3540.7 1087.7, 3567.1 1114.1 L 3577.3 1124.3 Q 3603.7 1150.7, 3630.1 1150.7 L 3793.6 1150.7" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3793.6 1150.7 L 3998.2 1150.7 C 4008.9 1150.7, 4008.9 1161.4, 4019.6 1161.4 L 4224.1 1161.4" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4224.1 1161.4 L 4239.1 1161.4 C 4273.9 1161.4, 4273.9 1199.4, 4308.7 1199.4 L 4639.3 1199.4" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4639.3 1199.4 L 4923.8 1199.4 C 4952.1 1199.4, 4952.1 1171.1, 4980.4 1171.1 L 5086.2 1171.1" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5086.2 1171.1 L 5253.6 1171.1 C 5272.4 1171.1, 5272.4 1190.0, 5291.3 1190.0 L 5458.7 1190.0" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5458.7 1190.0 L 5557.7 1190.0 C 5582.3 1190.0, 5582.3 1214.6, 5606.9 1214.6 L 5870.9 1214.6" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5870.9 1214.6 L 6105.4 1214.6 C 6113.6 1214.6, 6113.6 1222.8, 6121.8 1222.8 L 6356.3 1222.8" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 6356.3 1222.8 L 6511.0 1222.8 C 6521.6 1222.8, 6521.6 1233.4, 6532.2 1233.4 L 6686.9 1233.4" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 6686.9 1233.4 L 6833.8 1233.4 C 6845.9 1233.4, 6845.9 1245.5, 6857.9 1245.5 L 7004.8 1245.5" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7004.8 1245.5 L 7393.1 1245.5 C 7428.0 1245.5, 7428.0 1210.6, 7462.9 1210.6 L 7561.6 1210.6" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 7561.6 1210.6 L 7969.9 1210.6 Q 7996.3 1210.6, 8022.7 1184.2 L 8034.1 1172.8 Q 8060.5 1146.4, 8086.9 1146.4 L 8101.9 1146.4" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8101.9 1146.4 L 8418.7 1146.4 Q 8445.1 1146.4, 8471.5 1172.8 L 8517.6 1218.9 Q 8544.0 1245.3, 8570.4 1245.3 L 8585.4 1245.3" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8585.4 1245.3 L 8600.4 1245.3 C 8627.7 1245.3, 8627.7 1296.2, 8655.0 1296.2 L 8937.6 1296.2" fill="none" stroke="#3aab5f" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 2894.3 2232.2 L 2909.3 2232.2 Q 2935.7 2232.2, 2962.1 2258.6 L 3013.1 2309.6 Q 3039.5 2336.0, 3065.9 2336.0 L 3491.5 2336.0" fill="none" stroke="#c94040" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3491.5 2336.0 L 3834.1 2336.0 Q 3860.5 2336.0, 3886.9 2309.6 L 3980.4 2216.1 Q 4006.8 2189.7, 4033.2 2189.7 L 4048.2 2189.7" fill="none" stroke="#c94040" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4048.2 2189.7 L 4299.5 2189.7 Q 4325.9 2189.7, 4352.3 2163.3 L 4436.1 2079.5 Q 4462.5 2053.1, 4488.9 2053.1 L 4503.9 2053.1" fill="none" stroke="#c94040" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4503.9 2053.1 L 4704.2 2053.1 Q 4730.6 2053.1, 4757.0 2026.7 L 4826.0 1957.7 Q 4852.4 1931.3, 4878.8 1931.3 L 4893.8 1931.3" fill="none" stroke="#c94040" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 4893.8 1931.3 L 4919.1 1931.3 C 4942.9 1931.3, 4942.9 1907.5, 4966.7 1907.5 L 5302.6 1907.5" fill="none" stroke="#c94040" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5302.6 1907.5 L 5317.6 1907.5 Q 5344.0 1907.5, 5370.4 1881.1 L 5457.2 1794.3 Q 5483.6 1767.9, 5510.0 1767.9 L 5481.8 1767.9" fill="none" stroke="#c94040" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8274.1 1334.9 L 8289.1 1334.9 Q 8315.5 1334.9, 8341.9 1361.3 L 8345.4 1364.8 Q 8371.8 1391.2, 8398.2 1391.2 L 8713.5 1391.2" fill="none" stroke="#8a6d3b" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8713.5 1391.2 L 8824.7 1391.2 C 8861.3 1391.2, 8861.3 1427.8, 8897.9 1427.8 L 9124.0 1427.8" fill="none" stroke="#8a6d3b" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 9124.0 1427.8 L 9339.1 1427.8 C 9372.8 1427.8, 9372.8 1394.1, 9406.5 1394.1 L 9451.4 1394.1" fill="none" stroke="#8a6d3b" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 9451.4 1394.1 L 9463.1 1394.1 Q 9489.4 1394.1, 9515.8 1420.5 L 9526.8 1431.5 Q 9553.2 1457.9, 9579.6 1457.9 L 9567.9 1457.9" fill="none" stroke="#8a6d3b" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 9567.9 1457.9 L 9577.6 1457.9 Q 9604.0 1457.9, 9630.4 1484.3 L 9634.9 1488.8 Q 9661.3 1515.2, 9687.7 1515.2 L 9664.8 1515.2" fill="none" stroke="#8a6d3b" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3683.1 2035.4 L 4081.8 2035.4 C 4111.1 2035.4, 4111.1 2006.1, 4140.4 2006.1 L 5109.9 2006.1" fill="none" stroke="#607d8b" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 5109.9 2006.1 L 8819.9 2006.1 Q 8846.3 2006.1, 8872.7 1979.7 L 9363.7 1488.8 Q 9390.1 1462.4, 9416.4 1462.4 L 9664.8 1462.4" fill="none" stroke="#607d8b" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 8274.1 1202.9 L 8426.7 1202.9 Q 8453.1 1202.9, 8479.4 1229.3 L 8546.4 1296.2 Q 8572.8 1322.6, 8599.2 1322.6 L 8937.6 1322.6" fill="none" stroke="#7b3fa0" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 3683.1 2009.0 L 3765.1 2009.0 Q 3791.6 2009.0, 3818.0 1982.6 L 3979.8 1820.7 Q 4006.2 1794.3, 4032.6 1794.3 L 5481.8 1794.3" fill="none" stroke="#1a9e7a" stroke-width="7.9" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+<g data-node-id="4225502317">
+<circle cx="3665.8" cy="688.3" r="7.5" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="3.5200000000000005"/>
+<rect x="3599.7" y="711.5" width="133.8" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3598.9" y="710.3" width="133.8" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3614.3" y="752.2" font-size="39.6" fill="#2C2C2C" font-weight="600">Duvbo</text>
+</g>
+<g data-node-id="4225502331">
+<circle cx="1204.2" cy="293.3" r="7.5" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="3.5200000000000005"/>
+<rect x="1117.6" y="316.5" width="174.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="1116.8" y="315.3" width="174.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="1132.2" y="357.2" font-size="39.6" fill="#2C2C2C" font-weight="600">Hjulsta</text>
+</g>
+<g data-node-id="4225502334">
+<circle cx="4867.5" cy="936.0" r="7.5" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="3.5200000000000005"/>
+<rect x="4887.9" y="853.6" width="195.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4887.1" y="852.4" width="195.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4902.5" y="894.3" font-size="39.6" fill="#2C2C2C" font-weight="600">Huvudsta</text>
+</g>
+<g data-node-id="4225502342">
+<rect x="8717.3" y="1052.5" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="5.3"/>
+<line x1="8719.9" y1="1057.8" x2="8730.5" y2="1057.8" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8719.9" y1="1084.2" x2="8730.5" y2="1084.2" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="8556.2" y="971.0" width="339.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="8555.4" y="969.8" width="339.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="8570.8" y="1011.6" font-size="39.6" fill="#2C2C2C" font-weight="600">Kungsträdgården</text>
+</g>
+<g data-node-id="4225502358">
+<circle cx="2495.5" cy="416.9" r="7.5" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="3.5200000000000005"/>
+<rect x="2303.8" y="334.5" width="174.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="2303.0" y="333.3" width="174.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="2318.4" y="375.2" font-size="39.6" fill="#2C2C2C" font-weight="600">Rinkeby</text>
+</g>
+<g data-node-id="4225502359">
+<circle cx="3023.0" cy="586.1" r="7.5" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="3.5200000000000005"/>
+<rect x="2946.6" y="609.3" width="154.4" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="2945.8" y="608.1" width="154.4" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="2961.2" y="650.0" font-size="39.6" fill="#2C2C2C" font-weight="600">Rissne</text>
+</g>
+<g data-node-id="4225502362">
+<rect x="7623.9" y="1088.8" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="5.3"/>
+<line x1="7626.5" y1="1094.0" x2="7637.1" y2="1094.0" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="7626.5" y1="1120.4" x2="7637.1" y2="1120.4" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="7534.8" y="1007.2" width="195.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="7534.0" y="1006.0" width="195.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="7549.4" y="1047.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Rådhuset</text>
+</g>
+<g data-node-id="4225502374">
+<circle cx="4442.4" cy="865.0" r="7.5" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="3.5200000000000005"/>
+<rect x="4304.2" y="888.2" width="277.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4303.4" y="887.0" width="277.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4318.8" y="928.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Solna strand</text>
+</g>
+<g data-node-id="4225502376">
+<rect x="5855.3" y="1042.8" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="5.3"/>
+<line x1="5858.0" y1="1048.1" x2="5868.5" y2="1048.1" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="5858.0" y1="1074.5" x2="5868.5" y2="1074.5" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="5745.7" y="1102.1" width="236.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="5744.9" y="1100.9" width="236.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5760.3" y="1142.8" font-size="39.6" fill="#2C2C2C" font-weight="600">Stadshagen</text>
+</g>
+<g data-node-id="4225502379">
+<circle cx="4060.5" cy="781.0" r="7.5" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="3.5200000000000005"/>
+<rect x="3850.3" y="804.2" width="422.0" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3849.5" y="803.0" width="422.0" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3864.9" y="844.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Sundbybergs centrum</text>
+</g>
+<g data-node-id="4225502384">
+<circle cx="1768.9" cy="291.5" r="7.5" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="3.5200000000000005"/>
+<rect x="1692.5" y="209.1" width="154.4" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="1691.7" y="207.9" width="154.4" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="1707.1" y="249.8" font-size="39.6" fill="#2C2C2C" font-weight="600">Tensta</text>
+</g>
+<g data-node-id="4225502889">
+<rect x="5265.3" y="939.1" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="5.3"/>
+<line x1="5267.9" y1="944.4" x2="5278.5" y2="944.4" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="5267.9" y1="970.8" x2="5278.5" y2="970.8" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="5124.8" y="998.4" width="298.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="5124.0" y="997.2" width="298.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5139.4" y="1039.0" font-size="39.6" fill="#2C2C2C" font-weight="600">Västra skogen</text>
+</g>
+<g data-node-id="5190430369">
+<rect x="6996.9" y="1134.6" width="15.8" height="116.2" rx="7.9" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="5.3"/>
+<line x1="6999.5" y1="1139.9" x2="7010.1" y2="1139.9" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="6999.5" y1="1166.3" x2="7010.1" y2="1166.3" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="6999.5" y1="1192.7" x2="7010.1" y2="1192.7" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="6999.5" y1="1219.1" x2="7010.1" y2="1219.1" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="6999.5" y1="1245.5" x2="7010.1" y2="1245.5" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="6866.7" y="1273.1" width="277.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="6865.9" y="1271.9" width="277.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="6881.3" y="1313.8" font-size="39.6" fill="#2C2C2C" font-weight="600">Fridhemsplan</text>
+</g>
+<g data-node-id="5190465484">
+<rect x="8266.1" y="1039.2" width="15.8" height="301.0" rx="7.9" fill="#FFFFFF" stroke="#7b3fa0" stroke-width="5.3"/>
+<line x1="8268.8" y1="1044.5" x2="8279.3" y2="1044.5" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8268.8" y1="1070.9" x2="8279.3" y2="1070.9" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8268.8" y1="1097.3" x2="8279.3" y2="1097.3" stroke="#2678b2" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8268.8" y1="1229.3" x2="8279.3" y2="1229.3" stroke="#c4782a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8268.8" y1="1123.7" x2="8279.3" y2="1123.7" stroke="#607d8b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8268.8" y1="1255.7" x2="8279.3" y2="1255.7" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8268.8" y1="1282.1" x2="8279.3" y2="1282.1" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8268.8" y1="1150.1" x2="8279.3" y2="1150.1" stroke="#607d8b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8268.8" y1="1308.5" x2="8279.3" y2="1308.5" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8268.8" y1="1176.5" x2="8279.3" y2="1176.5" stroke="#2678b2" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8268.8" y1="1334.9" x2="8279.3" y2="1334.9" stroke="#8a6d3b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8268.8" y1="1202.9" x2="8279.3" y2="1202.9" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="8146.2" y="1362.5" width="257.3" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="8145.4" y="1361.3" width="257.3" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="8160.8" y="1403.2" font-size="39.6" fill="#2C2C2C" font-weight="600">T-Centralen</text>
+</g>
+<g data-node-id="4225502305">
+<circle cx="1546.4" cy="169.4" r="7.5" fill="#FFFFFF" stroke="#1a9e7a" stroke-width="3.5200000000000005"/>
+<rect x="1377.4" y="192.6" width="154.4" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="1376.6" y="191.4" width="154.4" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="1392.0" y="233.3" font-size="39.6" fill="#2C2C2C" font-weight="600">Akalla</text>
+</g>
+<g data-node-id="4225502328">
+<circle cx="3428.8" cy="663.1" r="7.5" fill="#FFFFFF" stroke="#1a9e7a" stroke-width="3.5200000000000005"/>
+<rect x="3290.7" y="686.3" width="277.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3289.9" y="685.1" width="277.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3305.3" y="727.0" font-size="39.6" fill="#2C2C2C" font-weight="600">Hallonbergen</text>
+</g>
+<g data-node-id="4225502333">
+<circle cx="2139.8" cy="214.5" r="7.5" fill="#FFFFFF" stroke="#1a9e7a" stroke-width="3.5200000000000005"/>
+<rect x="1993.4" y="237.7" width="133.8" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="1992.6" y="236.5" width="133.8" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="2008.0" y="278.4" font-size="39.6" fill="#2C2C2C" font-weight="600">Husby</text>
+</g>
+<g data-node-id="4225502343">
+<circle cx="2688.2" cy="339.9" r="7.5" fill="#FFFFFF" stroke="#1a9e7a" stroke-width="3.5200000000000005"/>
+<rect x="2622.1" y="363.1" width="133.8" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="2621.3" y="361.9" width="133.8" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="2636.7" y="403.8" font-size="39.6" fill="#2C2C2C" font-weight="600">Kista</text>
+</g>
+<g data-node-id="4225502354">
+<circle cx="3907.7" cy="765.3" r="7.5" fill="#FFFFFF" stroke="#1a9e7a" stroke-width="3.5200000000000005"/>
+<rect x="3800.4" y="682.9" width="216.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3799.6" y="681.7" width="216.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3815.0" y="723.6" font-size="39.6" fill="#2C2C2C" font-weight="600">Näckrosen</text>
+</g>
+<g data-node-id="4225502373">
+<circle cx="4494.6" cy="865.6" r="7.5" fill="#FFFFFF" stroke="#1a9e7a" stroke-width="3.5200000000000005"/>
+<rect x="4346.1" y="783.2" width="298.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4345.3" y="782.0" width="298.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4360.7" y="823.8" font-size="39.6" fill="#2C2C2C" font-weight="600">Solna centrum</text>
+</g>
+<g data-node-id="254879655">
+<circle cx="4184.1" cy="1638.1" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="4118.0" y="1661.3" width="133.8" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4117.2" y="1660.1" width="133.8" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4132.6" y="1702.0" font-size="39.6" fill="#2C2C2C" font-weight="600">Sätra</text>
+</g>
+<g data-node-id="1128662607">
+<circle cx="4555.8" cy="1545.4" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="4469.1" y="1568.6" width="174.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4468.3" y="1567.4" width="174.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4483.7" y="1609.3" font-size="39.6" fill="#2C2C2C" font-weight="600">Bredäng</text>
+</g>
+<g data-node-id="2392009092">
+<circle cx="3785.1" cy="1721.2" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="3525.5" y="1744.4" width="236.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3524.7" y="1743.2" width="236.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3540.1" y="1785.1" font-size="39.6" fill="#2C2C2C" font-weight="600">Skärholmen</text>
+</g>
+<g data-node-id="2392108057">
+<circle cx="2858.6" cy="1830.5" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="2883.0" y="1853.7" width="236.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="2882.2" y="1852.5" width="236.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="2897.6" y="1894.4" font-size="39.6" fill="#2C2C2C" font-weight="600">Vårby gård</text>
+</g>
+<g data-node-id="2392735103">
+<circle cx="1945.8" cy="1976.1" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="1776.8" y="1999.3" width="154.4" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="1776.0" y="1998.1" width="154.4" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="1791.4" y="2040.0" font-size="39.6" fill="#2C2C2C" font-weight="600">Fittja</text>
+</g>
+<g data-node-id="4225502306">
+<circle cx="1372.2" cy="2028.0" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="1316.4" y="2051.2" width="113.2" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="1315.6" y="2050.0" width="113.2" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="1331.0" y="2091.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Alby</text>
+</g>
+<g data-node-id="4225502308">
+<circle cx="6302.9" cy="1384.2" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="6088.6" y="1407.4" width="195.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="6087.8" y="1406.2" width="195.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="6103.2" y="1448.1" font-size="39.6" fill="#2C2C2C" font-weight="600">Aspudden</text>
+</g>
+<g data-node-id="4225502309">
+<circle cx="5572.9" cy="1405.3" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="5465.7" y="1428.5" width="216.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="5464.9" y="1427.3" width="216.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5480.3" y="1469.2" font-size="39.6" fill="#2C2C2C" font-weight="600">Axelsberg</text>
+</g>
+<g data-node-id="4225502323">
+<rect x="8705.5" y="1227.5" width="15.8" height="169.0" rx="7.9" fill="#FFFFFF" stroke="#c4782a" stroke-width="5.3"/>
+<line x1="8708.1" y1="1338.4" x2="8718.7" y2="1338.4" stroke="#c4782a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8708.1" y1="1232.8" x2="8718.7" y2="1232.8" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8708.1" y1="1364.8" x2="8718.7" y2="1364.8" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8708.1" y1="1259.2" x2="8718.7" y2="1259.2" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8708.1" y1="1285.6" x2="8718.7" y2="1285.6" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8708.1" y1="1312.0" x2="8718.7" y2="1312.0" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8708.1" y1="1391.2" x2="8718.7" y2="1391.2" stroke="#8a6d3b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="8595.9" y="1418.8" width="236.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="8595.1" y="1417.6" width="236.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="8610.5" y="1459.5" font-size="39.6" fill="#2C2C2C" font-weight="600">Gamla stan</text>
+</g>
+<g data-node-id="4225502329">
+<circle cx="738.4" cy="1928.6" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="524.1" y="1951.8" width="195.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="523.3" y="1950.6" width="195.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="538.7" y="1992.5" font-size="39.6" fill="#2C2C2C" font-weight="600">Hallunda</text>
+</g>
+<g data-node-id="4225502332">
+<rect x="7167.5" y="1273.5" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#d4456a" stroke-width="5.3"/>
+<line x1="7170.2" y1="1278.8" x2="7180.7" y2="1278.8" stroke="#d4456a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="7170.2" y1="1305.2" x2="7180.7" y2="1305.2" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="7068.2" y="1192.0" width="216.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="7067.4" y="1190.8" width="216.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="7082.8" y="1232.7" font-size="39.6" fill="#2C2C2C" font-weight="600">Hornstull</text>
+</g>
+<g data-node-id="4225502341">
+<circle cx="9437.7" cy="993.7" r="7.5" fill="#FFFFFF" stroke="#2678b2" stroke-width="3.5200000000000005"/>
+<rect x="9330.5" y="1016.9" width="216.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="9329.7" y="1015.7" width="216.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="9345.1" y="1057.6" font-size="39.6" fill="#2C2C2C" font-weight="600">Karlaplan</text>
+</g>
+<g data-node-id="4225502346">
+<rect x="6603.4" y="1324.9" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#d4456a" stroke-width="5.3"/>
+<line x1="6606.1" y1="1330.2" x2="6616.6" y2="1330.2" stroke="#d4456a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="6606.1" y1="1356.6" x2="6616.6" y2="1356.6" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="6483.5" y="1384.2" width="257.3" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="6482.7" y="1383.0" width="257.3" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="6498.1" y="1424.8" font-size="39.6" fill="#2C2C2C" font-weight="600">Liljeholmen</text>
+</g>
+<g data-node-id="4225502347">
+<rect x="8308.1" y="1248.2" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#d4456a" stroke-width="5.3"/>
+<line x1="8310.8" y1="1253.5" x2="8321.3" y2="1253.5" stroke="#d4456a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8310.8" y1="1279.9" x2="8321.3" y2="1279.9" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="8188.2" y="1307.5" width="257.3" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="8187.4" y="1306.3" width="257.3" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="8202.8" y="1348.2" font-size="39.6" fill="#2C2C2C" font-weight="600">Mariatorget</text>
+</g>
+<g data-node-id="4225502348">
+<circle cx="2535.5" cy="2008.3" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="2469.5" y="2031.5" width="133.8" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="2468.7" y="2030.3" width="133.8" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="2484.1" y="2072.2" font-size="39.6" fill="#2C2C2C" font-weight="600">Masmo</text>
+</g>
+<g data-node-id="4225502351">
+<circle cx="5114.7" cy="1438.4" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="4986.9" y="1461.6" width="257.3" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4986.1" y="1460.4" width="257.3" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5001.5" y="1502.3" font-size="39.6" fill="#2C2C2C" font-weight="600">Mälarhöjden</text>
+</g>
+<g data-node-id="4225502353">
+<circle cx="185.8" cy="1930.4" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="88.8" y="1953.6" width="195.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="88.0" y="1952.4" width="195.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="103.4" y="1994.3" font-size="39.6" fill="#2C2C2C" font-weight="600">Norsborg</text>
+</g>
+<g data-node-id="4225502360">
+<circle cx="10053.2" cy="882.7" r="7.5" fill="#FFFFFF" stroke="#2678b2" stroke-width="3.5200000000000005"/>
+<rect x="10071.5" y="905.9" width="174.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="10070.7" y="904.7" width="174.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="10086.1" y="946.6" font-size="39.6" fill="#2C2C2C" font-weight="600">Ropsten</text>
+</g>
+<g data-node-id="4225502371">
+<rect x="9116.0" y="1264.2" width="15.8" height="169.0" rx="7.9" fill="#FFFFFF" stroke="#d4456a" stroke-width="5.3"/>
+<line x1="9118.7" y1="1322.2" x2="9129.2" y2="1322.2" stroke="#d4456a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="9118.7" y1="1269.4" x2="9129.2" y2="1269.4" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="9118.7" y1="1348.6" x2="9129.2" y2="1348.6" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="9118.7" y1="1295.8" x2="9129.2" y2="1295.8" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="9118.7" y1="1375.0" x2="9129.2" y2="1375.0" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="9118.7" y1="1401.4" x2="9129.2" y2="1401.4" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="9118.7" y1="1427.8" x2="9129.2" y2="1427.8" stroke="#8a6d3b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="9037.3" y="1455.4" width="174.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="9036.5" y="1454.2" width="174.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="9051.9" y="1496.1" font-size="39.6" fill="#2C2C2C" font-weight="600">Slussen</text>
+</g>
+<g data-node-id="4225502890">
+<circle cx="3315.9" cy="1704.1" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="3229.2" y="1727.3" width="174.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3228.4" y="1726.1" width="174.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3243.8" y="1768.0" font-size="39.6" fill="#2C2C2C" font-weight="600">Vårberg</text>
+</g>
+<g data-node-id="4225502891">
+<rect x="7744.9" y="1301.8" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#d4456a" stroke-width="5.3"/>
+<line x1="7747.6" y1="1307.0" x2="7758.1" y2="1307.0" stroke="#d4456a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="7747.6" y1="1333.4" x2="7758.1" y2="1333.4" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="7625.0" y="1361.0" width="257.3" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="7624.2" y="1359.8" width="257.3" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="7639.6" y="1401.7" font-size="39.6" fill="#2C2C2C" font-weight="600">Zinkensdamm</text>
+</g>
+<g data-node-id="4225503126">
+<circle cx="5942.6" cy="1395.3" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="5845.6" y="1418.5" width="195.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="5844.8" y="1417.3" width="195.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5860.2" y="1459.2" font-size="39.6" fill="#2C2C2C" font-weight="600">Örnsberg</text>
+</g>
+<g data-node-id="4225503127">
+<rect x="8707.7" y="1123.4" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#2678b2" stroke-width="5.3"/>
+<line x1="8710.4" y1="1128.7" x2="8720.9" y2="1128.7" stroke="#2678b2" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8710.4" y1="1155.1" x2="8720.9" y2="1155.1" stroke="#607d8b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="8748.4" y="1182.7" width="319.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="8747.6" y="1181.5" width="319.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="8763.0" y="1223.4" font-size="39.6" fill="#2C2C2C" font-weight="600">Östermalmstorg</text>
+</g>
+<g data-node-id="4937352125">
+<circle cx="9808.0" cy="996.8" r="7.5" fill="#FFFFFF" stroke="#2678b2" stroke-width="3.5200000000000005"/>
+<rect x="9731.6" y="1020.0" width="154.4" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="9730.8" y="1018.8" width="154.4" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="9746.2" y="1060.7" font-size="39.6" fill="#2C2C2C" font-weight="600">Gärdet</text>
+</g>
+<g data-node-id="60746176">
+<rect x="5191.1" y="1126.9" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#2678b2" stroke-width="5.3"/>
+<line x1="5193.8" y1="1132.2" x2="5204.3" y2="1132.2" stroke="#2678b2" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="5193.8" y1="1158.6" x2="5204.3" y2="1158.6" stroke="#c4782a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="4999.1" y="1186.2" width="401.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4998.3" y="1185.0" width="401.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5013.7" y="1226.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Tekniska högskolan</text>
+</g>
+<g data-node-id="1332810633">
+<circle cx="3169.0" cy="1543.3" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="3201.7" y="1460.9" width="319.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3200.9" y="1459.7" width="319.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3216.3" y="1501.6" font-size="39.6" fill="#2C2C2C" font-weight="600">Hägerstensåsen</text>
+</g>
+<g data-node-id="4225502312">
+<rect x="3225.4" y="766.2" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#8a6d3b" stroke-width="5.3"/>
+<line x1="3228.1" y1="771.4" x2="3238.6" y2="771.4" stroke="#8a6d3b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="3228.1" y1="797.8" x2="3238.6" y2="797.8" stroke="#d4456a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="2973.8" y="825.4" width="236.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="2973.0" y="824.2" width="236.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="2988.4" y="866.1" font-size="39.6" fill="#2C2C2C" font-weight="600">Bergshamra</text>
+</g>
+<g data-node-id="4225502316">
+<rect x="3594.1" y="579.0" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#c94040" stroke-width="5.3"/>
+<line x1="3596.8" y1="584.2" x2="3607.3" y2="584.2" stroke="#c94040" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="3596.8" y1="610.6" x2="3607.3" y2="610.6" stroke="#8a6d3b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="3412.4" y="497.4" width="380.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3411.6" y="496.2" width="380.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3427.0" y="538.1" font-size="39.6" fill="#2C2C2C" font-weight="600">Danderyds sjukhus</text>
+</g>
+<g data-node-id="4225502322">
+<circle cx="2245.8" cy="1581.1" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="2148.9" y="1604.3" width="195.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="2148.1" y="1603.1" width="195.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="2163.5" y="1644.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Fruängen</text>
+</g>
+<g data-node-id="4225502350">
+<circle cx="4651.0" cy="1543.1" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="4471.6" y="1460.7" width="360.3" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4470.8" y="1459.5" width="360.3" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4486.2" y="1501.4" font-size="39.6" fill="#2C2C2C" font-weight="600">Midsommarkransen</text>
+</g>
+<g data-node-id="4225502352">
+<circle cx="3214.2" cy="545.2" r="7.5" fill="#FFFFFF" stroke="#c94040" stroke-width="3.5200000000000005"/>
+<rect x="3065.8" y="462.8" width="298.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3065.0" y="461.6" width="298.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3080.4" y="503.5" font-size="39.6" fill="#2C2C2C" font-weight="600">Mörby centrum</text>
+</g>
+<g data-node-id="4225502375">
+<rect x="8831.7" y="1052.3" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#607d8b" stroke-width="5.3"/>
+<line x1="8834.3" y1="1083.9" x2="8844.9" y2="1083.9" stroke="#607d8b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8834.3" y1="1057.5" x2="8844.9" y2="1057.5" stroke="#c4782a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="8752.9" y="1111.5" width="174.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="8752.1" y="1110.3" width="174.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="8767.5" y="1152.2" font-size="39.6" fill="#2C2C2C" font-weight="600">Stadion</text>
+</g>
+<g data-node-id="4225502383">
+<circle cx="3859.1" cy="1556.3" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="3731.2" y="1434.3" width="257.3" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3730.4" y="1433.1" width="257.3" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3745.8" y="1475.0" font-size="39.6" fill="#2C2C2C" font-weight="600">Telefonplan</text>
+</g>
+<g data-node-id="4225502386">
+<rect x="3947.1" y="904.3" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#d4456a" stroke-width="5.3"/>
+<line x1="3949.8" y1="936.0" x2="3960.3" y2="936.0" stroke="#d4456a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="3949.8" y1="909.6" x2="3960.3" y2="909.6" stroke="#2678b2" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="3806.6" y="963.6" width="298.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3805.8" y="962.4" width="298.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3821.2" y="1004.3" font-size="39.6" fill="#2C2C2C" font-weight="600">Universitetet</text>
+</g>
+<g data-node-id="4225502388">
+<circle cx="2655.5" cy="1510.3" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="2538.0" y="1573.1" width="236.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="2537.2" y="1571.9" width="236.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="2552.6" y="1613.7" font-size="39.6" fill="#2C2C2C" font-weight="600">Västertorp</text>
+</g>
+<g data-node-id="146868479">
+<rect x="10720.3" y="1516.0" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#3aab5f" stroke-width="5.3"/>
+<line x1="10722.9" y1="1521.2" x2="10733.5" y2="1521.2" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="10722.9" y1="1547.6" x2="10733.5" y2="1547.6" stroke="#8a6d3b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="10752.7" y="1575.2" width="236.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="10751.9" y="1574.0" width="236.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="10767.3" y="1615.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Björkhagen</text>
+</g>
+<g data-node-id="4225502304">
+<rect x="5078.3" y="1139.5" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#5d6cc1" stroke-width="5.3"/>
+<line x1="5080.9" y1="1144.7" x2="5091.5" y2="1144.7" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="5080.9" y1="1171.1" x2="5091.5" y2="1171.1" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="4781.3" y="1057.9" width="277.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4780.5" y="1056.7" width="277.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4795.9" y="1098.6" font-size="39.6" fill="#2C2C2C" font-weight="600">Abrahamsberg</text>
+</g>
+<g data-node-id="4225502307">
+<rect x="5863.0" y="1156.5" width="15.8" height="63.4" rx="7.9" fill="#FFFFFF" stroke="#5d6cc1" stroke-width="5.3"/>
+<line x1="5865.6" y1="1161.8" x2="5876.2" y2="1161.8" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="5865.6" y1="1188.2" x2="5876.2" y2="1188.2" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="5865.6" y1="1214.6" x2="5876.2" y2="1214.6" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="5804.8" y="1281.8" width="133.8" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="5804.0" y="1280.6" width="133.8" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5819.4" y="1322.4" font-size="39.6" fill="#2C2C2C" font-weight="600">Alvik</text>
+</g>
+<g data-node-id="4225502310">
+<circle cx="4880.9" cy="1851.6" r="7.5" fill="#FFFFFF" stroke="#c94040" stroke-width="3.5200000000000005"/>
+<rect x="4753.0" y="1769.2" width="257.3" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4752.2" y="1768.0" width="257.3" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4767.6" y="1809.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Bagarmossen</text>
+</g>
+<g data-node-id="4225502315">
+<rect x="4631.3" y="1167.8" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#5d6cc1" stroke-width="5.3"/>
+<line x1="4634.0" y1="1173.0" x2="4644.5" y2="1173.0" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="4634.0" y1="1199.4" x2="4644.5" y2="1199.4" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="4521.7" y="1227.0" width="236.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4520.9" y="1225.8" width="236.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4536.3" y="1267.7" font-size="39.6" fill="#2C2C2C" font-weight="600">Brommaplan</text>
+</g>
+<g data-node-id="4225502326">
+<rect x="9656.9" y="1430.7" width="15.8" height="89.8" rx="7.9" fill="#FFFFFF" stroke="#3aab5f" stroke-width="5.3"/>
+<line x1="9659.5" y1="1436.0" x2="9670.1" y2="1436.0" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="9659.5" y1="1488.8" x2="9670.1" y2="1488.8" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="9659.5" y1="1515.2" x2="9670.1" y2="1515.2" stroke="#8a6d3b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="9659.5" y1="1462.4" x2="9670.1" y2="1462.4" stroke="#607d8b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="9526.7" y="1542.8" width="277.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="9525.9" y="1541.6" width="277.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="9541.3" y="1583.5" font-size="39.6" fill="#2C2C2C" font-weight="600">Gullmarsplan</text>
+</g>
+<g data-node-id="4225502330">
+<circle cx="10604.2" cy="1499.0" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="10445.5" y="1416.6" width="319.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="10444.7" y="1415.4" width="319.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="10460.1" y="1457.3" font-size="39.6" fill="#2C2C2C" font-weight="600">Hammarbyhöjden</text>
+</g>
+<g data-node-id="4225502338">
+<rect x="8929.6" y="1185.3" width="15.8" height="142.6" rx="7.9" fill="#FFFFFF" stroke="#5d6cc1" stroke-width="5.3"/>
+<line x1="8932.3" y1="1217.0" x2="8942.8" y2="1217.0" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8932.3" y1="1190.6" x2="8942.8" y2="1190.6" stroke="#607d8b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8932.3" y1="1243.4" x2="8942.8" y2="1243.4" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8932.3" y1="1269.8" x2="8942.8" y2="1269.8" stroke="#2678b2" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8932.3" y1="1296.2" x2="8942.8" y2="1296.2" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8932.3" y1="1322.6" x2="8942.8" y2="1322.6" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="8840.6" y="1350.2" width="195.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="8839.8" y="1349.0" width="195.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="8855.2" y="1390.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Hötorget</text>
+</g>
+<g data-node-id="4225502344">
+<rect x="6348.4" y="1164.8" width="15.8" height="63.4" rx="7.9" fill="#FFFFFF" stroke="#5d6cc1" stroke-width="5.3"/>
+<line x1="6351.0" y1="1170.0" x2="6361.6" y2="1170.0" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="6351.0" y1="1196.4" x2="6361.6" y2="1196.4" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="6351.0" y1="1222.8" x2="6361.6" y2="1222.8" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="6218.1" y="1250.4" width="277.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="6217.3" y="1249.2" width="277.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="6232.7" y="1291.1" font-size="39.6" fill="#2C2C2C" font-weight="600">Kristineberg</text>
+</g>
+<g data-node-id="4225502345">
+<rect x="4276.7" y="1793.2" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#c94040" stroke-width="5.3"/>
+<line x1="4279.3" y1="1824.9" x2="4289.9" y2="1824.9" stroke="#c94040" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="4279.3" y1="1798.5" x2="4289.9" y2="1798.5" stroke="#8a6d3b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="4187.7" y="1852.5" width="195.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4186.9" y="1851.3" width="195.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4202.3" y="1893.2" font-size="39.6" fill="#2C2C2C" font-weight="600">Kärrtorp</text>
+</g>
+<g data-node-id="4225502349">
+<rect x="9443.4" y="1336.0" width="15.8" height="63.4" rx="7.9" fill="#FFFFFF" stroke="#3aab5f" stroke-width="5.3"/>
+<line x1="9446.1" y1="1341.3" x2="9456.6" y2="1341.3" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="9446.1" y1="1367.7" x2="9456.6" y2="1367.7" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="9446.1" y1="1394.1" x2="9456.6" y2="1394.1" stroke="#8a6d3b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="9272.0" y="1254.5" width="360.3" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="9271.2" y="1253.3" width="360.3" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="9286.6" y="1295.2" font-size="39.6" fill="#2C2C2C" font-weight="600">Medborgarplatsen</text>
+</g>
+<g data-node-id="4225502357">
+<rect x="8094.0" y="1088.3" width="15.8" height="63.4" rx="7.9" fill="#FFFFFF" stroke="#5d6cc1" stroke-width="5.3"/>
+<line x1="8096.6" y1="1093.6" x2="8107.2" y2="1093.6" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8096.6" y1="1120.0" x2="8107.2" y2="1120.0" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8096.6" y1="1146.4" x2="8107.2" y2="1146.4" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="8004.9" y="1174.0" width="195.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="8004.1" y="1172.8" width="195.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="8019.5" y="1214.6" font-size="39.6" fill="#2C2C2C" font-weight="600">Odenplan</text>
+</g>
+<g data-node-id="4225502363">
+<rect x="8577.5" y="1187.2" width="15.8" height="63.4" rx="7.9" fill="#FFFFFF" stroke="#5d6cc1" stroke-width="5.3"/>
+<line x1="8580.1" y1="1192.5" x2="8590.7" y2="1192.5" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8580.1" y1="1218.9" x2="8590.7" y2="1218.9" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="8580.1" y1="1245.3" x2="8590.7" y2="1245.3" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="8280.5" y="1105.7" width="277.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="8279.7" y="1104.5" width="277.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="8295.1" y="1146.4" font-size="39.6" fill="#2C2C2C" font-weight="600">Rådmansgatan</text>
+</g>
+<g data-node-id="4225502366">
+<rect x="7553.7" y="1152.6" width="15.8" height="63.4" rx="7.9" fill="#FFFFFF" stroke="#5d6cc1" stroke-width="5.3"/>
+<line x1="7556.3" y1="1157.8" x2="7566.9" y2="1157.8" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="7556.3" y1="1184.2" x2="7566.9" y2="1184.2" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="7556.3" y1="1210.6" x2="7566.9" y2="1210.6" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="7392.6" y="1238.2" width="339.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="7391.8" y="1237.0" width="339.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="7407.2" y="1278.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Sankt Eriksplan</text>
+</g>
+<g data-node-id="4225502367">
+<rect x="9560.0" y="1399.8" width="15.8" height="63.4" rx="7.9" fill="#FFFFFF" stroke="#3aab5f" stroke-width="5.3"/>
+<line x1="9562.6" y1="1405.1" x2="9573.2" y2="1405.1" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="9562.6" y1="1431.5" x2="9573.2" y2="1431.5" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="9562.6" y1="1457.9" x2="9573.2" y2="1457.9" stroke="#8a6d3b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="9460.7" y="1485.5" width="216.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="9459.9" y="1484.3" width="216.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="9475.3" y="1526.2" font-size="39.6" fill="#2C2C2C" font-weight="600">Skanstull</text>
+</g>
+<g data-node-id="4225502368">
+<circle cx="5196.6" cy="1951.0" r="7.5" fill="#FFFFFF" stroke="#c94040" stroke-width="3.5200000000000005"/>
+<rect x="5219.0" y="1974.2" width="216.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="5218.2" y="1973.0" width="216.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5233.6" y="2014.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Skarpnäck</text>
+</g>
+<g data-node-id="4225502370">
+<rect x="10288.4" y="1494.5" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#3aab5f" stroke-width="5.3"/>
+<line x1="10291.0" y1="1499.8" x2="10301.6" y2="1499.8" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="10291.0" y1="1526.2" x2="10301.6" y2="1526.2" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="10158.1" y="1553.8" width="277.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="10157.3" y="1552.6" width="277.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="10172.7" y="1594.5" font-size="39.6" fill="#2C2C2C" font-weight="600">Skärmarbrink</text>
+</g>
+<g data-node-id="4225502377">
+<rect x="5450.7" y="1158.3" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#5d6cc1" stroke-width="5.3"/>
+<line x1="5453.4" y1="1163.6" x2="5463.9" y2="1163.6" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="5453.4" y1="1190.0" x2="5463.9" y2="1190.0" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="5320.5" y="1076.8" width="277.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="5319.7" y="1075.6" width="277.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5335.1" y="1117.5" font-size="39.6" fill="#2C2C2C" font-weight="600">Stora mossen</text>
+</g>
+<g data-node-id="4225502385">
+<rect x="6678.9" y="1175.3" width="15.8" height="63.4" rx="7.9" fill="#FFFFFF" stroke="#5d6cc1" stroke-width="5.3"/>
+<line x1="6681.6" y1="1180.6" x2="6692.1" y2="1180.6" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="6681.6" y1="1207.0" x2="6692.1" y2="1207.0" stroke="#7b3fa0" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="6681.6" y1="1233.4" x2="6692.1" y2="1233.4" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="6548.7" y="1261.0" width="277.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="6547.9" y="1259.8" width="277.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="6563.3" y="1301.7" font-size="39.6" fill="#2C2C2C" font-weight="600">Thorildsplan</text>
+</g>
+<g data-node-id="4225503125">
+<rect x="4216.2" y="1129.8" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#5d6cc1" stroke-width="5.3"/>
+<line x1="4218.8" y1="1135.0" x2="4229.4" y2="1135.0" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="4218.8" y1="1161.4" x2="4229.4" y2="1161.4" stroke="#3aab5f" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="4137.4" y="1048.2" width="174.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4136.6" y="1047.0" width="174.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4152.0" y="1088.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Åkeshov</text>
+</g>
+<g data-node-id="4225502319">
+<circle cx="5158.9" cy="2248.4" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="5010.4" y="2271.6" width="298.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="5009.6" y="2270.4" width="298.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5025.0" y="2312.3" font-size="39.6" fill="#2C2C2C" font-weight="600">Farsta strand</text>
+</g>
+<g data-node-id="4225502320">
+<circle cx="4728.2" cy="2266.7" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="4651.9" y="2184.3" width="154.4" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4651.1" y="2183.1" width="154.4" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4666.5" y="2224.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Farsta</text>
+</g>
+<g data-node-id="4225502325">
+<rect x="3835.9" y="2080.7" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#d4456a" stroke-width="5.3"/>
+<line x1="3838.6" y1="2112.4" x2="3849.1" y2="2112.4" stroke="#d4456a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="3838.6" y1="2086.0" x2="3849.1" y2="2086.0" stroke="#c4782a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="3606.9" y="2140.0" width="216.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3606.1" y="2138.8" width="216.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3621.5" y="2180.7" font-size="39.6" fill="#2C2C2C" font-weight="600">Gubbängen</text>
+</g>
+<g data-node-id="4225502337">
+<circle cx="4229.1" cy="2141.0" r="7.5" fill="#FFFFFF" stroke="#d4456a" stroke-width="3.5200000000000005"/>
+<rect x="4111.5" y="2164.2" width="236.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4110.7" y="2163.0" width="236.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4126.1" y="2204.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Hökarängen</text>
+</g>
+<g data-node-id="4225502365">
+<circle cx="10494.1" cy="1658.0" r="7.5" fill="#FFFFFF" stroke="#1a9e7a" stroke-width="3.5200000000000005"/>
+<rect x="10386.8" y="1681.2" width="216.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="10386.0" y="1680.0" width="216.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="10401.4" y="1721.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Sandsborg</text>
+</g>
+<g data-node-id="4225502369">
+<rect x="10607.8" y="1708.4" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#1a9e7a" stroke-width="5.3"/>
+<line x1="10610.5" y1="1713.7" x2="10621.0" y2="1713.7" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="10610.5" y1="1740.1" x2="10621.0" y2="1740.1" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="10436.4" y="1767.7" width="360.3" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="10435.6" y="1766.5" width="360.3" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="10451.0" y="1808.3" font-size="39.6" fill="#2C2C2C" font-weight="600">Skogskyrkogården</text>
+</g>
+<g data-node-id="4225502382">
+<rect x="5315.3" y="2045.5" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#c4782a" stroke-width="5.3"/>
+<line x1="5318.0" y1="2050.8" x2="5328.5" y2="2050.8" stroke="#c4782a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="5318.0" y1="2077.2" x2="5328.5" y2="2077.2" stroke="#5d6cc1" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="5205.7" y="2144.4" width="236.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="5204.9" y="2143.2" width="236.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5220.3" y="2185.1" font-size="39.6" fill="#2C2C2C" font-weight="600">Tallkrogen</text>
+</g>
+<g data-node-id="60884889">
+<circle cx="2894.3" cy="2232.2" r="7.5" fill="#FFFFFF" stroke="#c94040" stroke-width="3.5200000000000005"/>
+<rect x="2680.0" y="2255.4" width="195.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="2679.2" y="2254.2" width="195.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="2694.6" y="2296.1" font-size="39.6" fill="#2C2C2C" font-weight="600">Hagsätra</text>
+</g>
+<g data-node-id="2069718820">
+<circle cx="4048.2" cy="2189.7" r="7.5" fill="#FFFFFF" stroke="#c94040" stroke-width="3.5200000000000005"/>
+<rect x="3833.9" y="2212.9" width="195.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3833.1" y="2211.7" width="195.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3848.5" y="2253.5" font-size="39.6" fill="#2C2C2C" font-weight="600">Högdalen</text>
+</g>
+<g data-node-id="4225502311">
+<circle cx="4503.9" cy="2053.1" r="7.5" fill="#FFFFFF" stroke="#c94040" stroke-width="3.5200000000000005"/>
+<rect x="4396.6" y="2076.3" width="216.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4395.8" y="2075.1" width="216.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4411.2" y="2117.0" font-size="39.6" fill="#2C2C2C" font-weight="600">Bandhagen</text>
+</g>
+<g data-node-id="4225502313">
+<circle cx="2845.7" cy="1108.9" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="2728.1" y="1132.1" width="236.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="2727.3" y="1130.9" width="236.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="2742.7" y="1172.8" font-size="39.6" fill="#2C2C2C" font-weight="600">Blackeberg</text>
+</g>
+<g data-node-id="4225502318">
+<rect x="3675.1" y="2003.7" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#607d8b" stroke-width="5.3"/>
+<line x1="3677.8" y1="2035.4" x2="3688.3" y2="2035.4" stroke="#607d8b" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="3677.8" y1="2009.0" x2="3688.3" y2="2009.0" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="3544.9" y="2063.0" width="277.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3544.1" y="2061.8" width="277.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3559.5" y="2103.7" font-size="39.6" fill="#2C2C2C" font-weight="600">Enskede gård</text>
+</g>
+<g data-node-id="4225502324">
+<circle cx="5109.8" cy="2006.1" r="7.5" fill="#FFFFFF" stroke="#607d8b" stroke-width="3.5200000000000005"/>
+<rect x="5033.5" y="2029.3" width="154.4" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="5032.7" y="2028.1" width="154.4" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5048.1" y="2069.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Globen</text>
+</g>
+<g data-node-id="4225502335">
+<circle cx="992.3" cy="1180.6" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="664.7" y="1203.8" width="298.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="663.9" y="1202.6" width="298.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="679.3" y="1244.5" font-size="39.6" fill="#2C2C2C" font-weight="600">Hässelby gård</text>
+</g>
+<g data-node-id="4225502336">
+<circle cx="451.6" cy="1189.7" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="282.5" y="1212.9" width="339.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="281.7" y="1211.7" width="339.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="297.1" y="1253.6" font-size="39.6" fill="#2C2C2C" font-weight="600">Hässelby strand</text>
+</g>
+<g data-node-id="4225502339">
+<circle cx="3367.9" cy="1087.7" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="3040.3" y="1110.9" width="298.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3039.5" y="1109.7" width="298.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3054.9" y="1151.6" font-size="39.6" fill="#2C2C2C" font-weight="600">Islandstorget</text>
+</g>
+<g data-node-id="4225502340">
+<circle cx="1539.9" cy="1068.4" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="1412.0" y="1091.6" width="257.3" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="1411.2" y="1090.4" width="257.3" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="1426.6" y="1132.3" font-size="39.6" fill="#2C2C2C" font-weight="600">Johannelund</text>
+</g>
+<g data-node-id="4225502361">
+<circle cx="2541.6" cy="1091.6" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="2454.9" y="1114.8" width="174.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="2454.1" y="1113.6" width="174.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="2469.5" y="1155.5" font-size="39.6" fill="#2C2C2C" font-weight="600">Råcksta</text>
+</g>
+<g data-node-id="4225502364">
+<circle cx="3491.4" cy="2336.0" r="7.5" fill="#FFFFFF" stroke="#c94040" stroke-width="3.5200000000000005"/>
+<rect x="3299.8" y="2359.2" width="174.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3299.0" y="2358.0" width="174.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3314.4" y="2399.9" font-size="39.6" fill="#2C2C2C" font-weight="600">Rågsved</text>
+</g>
+<g data-node-id="4225502372">
+<rect x="5473.8" y="1762.6" width="15.8" height="37.0" rx="7.9" fill="#FFFFFF" stroke="#c94040" stroke-width="5.3"/>
+<line x1="5476.5" y1="1767.9" x2="5487.0" y2="1767.9" stroke="#c94040" stroke-width="1.7600000000000002" opacity="0.4"/>
+<line x1="5476.5" y1="1794.3" x2="5487.0" y2="1794.3" stroke="#1a9e7a" stroke-width="1.7600000000000002" opacity="0.4"/>
+<rect x="5506.2" y="1821.9" width="236.7" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="5505.4" y="1820.7" width="236.7" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5520.8" y="1862.6" font-size="39.6" fill="#2C2C2C" font-weight="600">Sockenplan</text>
+</g>
+<g data-node-id="4225502378">
+<circle cx="4893.8" cy="1931.3" r="7.5" fill="#FFFFFF" stroke="#c94040" stroke-width="3.5200000000000005"/>
+<rect x="4807.1" y="1954.5" width="174.9" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="4806.3" y="1953.3" width="174.9" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="4821.7" y="1995.2" font-size="39.6" fill="#2C2C2C" font-weight="600">Stureby</text>
+</g>
+<g data-node-id="4225502380">
+<circle cx="5302.5" cy="1907.5" r="7.5" fill="#FFFFFF" stroke="#c94040" stroke-width="3.5200000000000005"/>
+<rect x="5088.2" y="1825.1" width="195.5" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="5087.4" y="1823.9" width="195.5" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="5102.8" y="1865.8" font-size="39.6" fill="#2C2C2C" font-weight="600">Svedmyra</text>
+</g>
+<g data-node-id="4225502387">
+<circle cx="2083.6" cy="1048.8" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="1846.6" y="1072.0" width="216.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="1845.8" y="1070.8" width="216.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="1861.2" y="1112.7" font-size="39.6" fill="#2C2C2C" font-weight="600">Vällingby</text>
+</g>
+<g data-node-id="4225503124">
+<circle cx="3793.6" cy="1150.7" r="7.5" fill="#FFFFFF" stroke="#3aab5f" stroke-width="3.5200000000000005"/>
+<rect x="3686.3" y="1068.3" width="216.1" height="61.6" rx="6.6000000000000005" fill="#000" opacity="0.05"/>
+<rect x="3685.5" y="1067.1" width="216.1" height="61.6" rx="6.6000000000000005" fill="#FFFFFF" stroke="#8C8680" stroke-width="1.32"/>
+<text x="3700.9" y="1109.0" font-size="39.6" fill="#2C2C2C" font-weight="600">Ängbyplan</text>
+</g>
+<text x="22.0" y="35.2" font-size="9.9" fill="#2C2C2C" opacity="0.35" font-weight="300">DAG (99 OPS)</text>
+<line x1="22.0" y1="2473.5" x2="44.0" y2="2473.5" stroke="#7b3fa0" stroke-width="6.6000000000000005" stroke-linecap="round" opacity="0.7"/>
+<text x="50.6" y="2476.4" font-size="27.7" fill="#2C2C2C" opacity="0.5">T10</text>
+<line x1="113.5" y1="2473.5" x2="135.5" y2="2473.5" stroke="#1a9e7a" stroke-width="6.6000000000000005" stroke-linecap="round" opacity="0.7"/>
+<text x="142.1" y="2476.4" font-size="27.7" fill="#2C2C2C" opacity="0.5">T11</text>
+<line x1="205.0" y1="2473.5" x2="227.0" y2="2473.5" stroke="#d4456a" stroke-width="6.6000000000000005" stroke-linecap="round" opacity="0.7"/>
+<text x="233.6" y="2476.4" font-size="27.7" fill="#2C2C2C" opacity="0.5">T13</text>
+<line x1="296.6" y1="2473.5" x2="318.6" y2="2473.5" stroke="#2678b2" stroke-width="6.6000000000000005" stroke-linecap="round" opacity="0.7"/>
+<text x="325.2" y="2476.4" font-size="27.7" fill="#2C2C2C" opacity="0.5">T13-3</text>
+<line x1="419.8" y1="2473.5" x2="441.8" y2="2473.5" stroke="#c4782a" stroke-width="6.6000000000000005" stroke-linecap="round" opacity="0.7"/>
+<text x="448.4" y="2476.4" font-size="27.7" fill="#2C2C2C" opacity="0.5">T13-4</text>
+<line x1="543.0" y1="2473.5" x2="565.0" y2="2473.5" stroke="#5d6cc1" stroke-width="6.6000000000000005" stroke-linecap="round" opacity="0.7"/>
+<text x="571.6" y="2476.4" font-size="27.7" fill="#2C2C2C" opacity="0.5">T13-5</text>
+<line x1="666.2" y1="2473.5" x2="688.2" y2="2473.5" stroke="#3aab5f" stroke-width="6.6000000000000005" stroke-linecap="round" opacity="0.7"/>
+<text x="694.8" y="2476.4" font-size="27.7" fill="#2C2C2C" opacity="0.5">T14</text>
+<line x1="757.7" y1="2473.5" x2="779.7" y2="2473.5" stroke="#c94040" stroke-width="6.6000000000000005" stroke-linecap="round" opacity="0.7"/>
+<text x="786.3" y="2476.4" font-size="27.7" fill="#2C2C2C" opacity="0.5">T14-7</text>
+<line x1="880.9" y1="2473.5" x2="902.9" y2="2473.5" stroke="#8a6d3b" stroke-width="6.6000000000000005" stroke-linecap="round" opacity="0.7"/>
+<text x="909.5" y="2476.4" font-size="27.7" fill="#2C2C2C" opacity="0.5">T14-8</text>
+<line x1="1004.1" y1="2473.5" x2="1026.1" y2="2473.5" stroke="#607d8b" stroke-width="6.6000000000000005" stroke-linecap="round" opacity="0.7"/>
+<text x="1032.7" y="2476.4" font-size="27.7" fill="#2C2C2C" opacity="0.5">T14-9</text>
+<text x="22.0" y="2487.8" font-size="23.8" fill="#8C8680" opacity="0.35">99 ops | 99 edges | 32 routes</text>
+</svg></div>
+      <div class="meta">n=99 · e=99 · r=32</div>
+    </div></div>
+  </section>
+</body></html>
