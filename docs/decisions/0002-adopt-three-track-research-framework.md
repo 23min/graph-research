@@ -116,7 +116,7 @@ needs, experiment follow-ups, and current intuition.
 - **No active epic is declared by this ADR.** The next epic is
   framed as a separate step, driven by consumer-product need and
   current intuition, not by methodology plan. `work/epics/` and
-  `docs/roadmap.md` reflect this honestly rather than filling in a
+  `work/roadmap.md` reflect this honestly rather than filling in a
   placeholder.
 - **Six skills under `.ai-repo/skills/` are the executable form of
   this ADR.** Changes to the framework's operational details update
