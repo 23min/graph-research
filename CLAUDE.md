@@ -218,4 +218,4 @@ One paragraph: overall assessment (approve / request changes).
 
 ## Current Work
 
-No active milestone on `main`. Direction-specific work lives on `research/*` branches. Check out the relevant branch and read `work/epics/` and `work/milestones/tracking/` there.
+No active epic as of 2026-04-20. The operating frame is the three-track research framework recorded in `docs/decisions/0002-adopt-three-track-research-framework.md`; operational detail is in `docs/methodology/three-track-workflow.md`. Active epics live under `work/epics/`, their tracking docs under `work/milestones/tracking/`, and completed epics under `work/done/`. The next epic is in framing.

@@ -4,14 +4,15 @@ Research artefacts. This tree grows as the work progresses; entries are added wh
 
 ## Layout
 
-- `research-questions.md` — the open questions driving the work
-- `roadmap.md` — milestone sequencing
-- `literature/` — systematic review: bibliography, per-paper notes, thematic reviews, PDFs (gitignored)
-- `methodology/` — how the research is conducted (split protocol, metrics, reproducibility, user-study design)
+- `graph-visualization-field-map.md` — survey of the graph-drawing research landscape (communities, active researchers, open problems); background reading for the hypothesis pool and methodology
+- `literature/` — systematic review: bibliography (single source of truth for citations), per-paper notes, thematic reviews, PDFs (gitignored, out-of-band)
+- `methodology/` — how the research is conducted; start at `three-track-workflow.md` for the operating model
 - `experiments/` — per-experiment records (hypothesis, setup, results, discussion)
-- `decisions/` — numbered ADRs recording methodological decisions
+- `decisions/` — numbered ADRs recording methodological and architectural decisions
 - `results/` — committed quantitative outputs; regenerated from scripts, not handwritten
 - `glossary.md` — metro-map / layered-layout vocabulary
+
+Active roadmap and epic tracking live under `/work/`, not here.
 
 ## Conventions
 
