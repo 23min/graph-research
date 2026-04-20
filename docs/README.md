@@ -5,10 +5,12 @@ Research artefacts. This tree grows as the work progresses; entries are added wh
 ## Layout
 
 - `graph-visualization-field-map.md` — survey of the graph-drawing research landscape (communities, active researchers, open problems); background reading for the hypothesis pool and methodology
+- `research-questions.md` — thesis-level questions the project is currently curious about; upstream of hypotheses and experiments
 - `literature/` — systematic review: bibliography (single source of truth for citations), per-paper notes, thematic reviews, PDFs (gitignored, out-of-band)
 - `methodology/` — how the research is conducted; start at `three-track-workflow.md` for the operating model
 - `experiments/` — per-experiment records (hypothesis, setup, results, discussion)
 - `decisions/` — numbered ADRs recording methodological and architectural decisions
+- `requirements/` — extracted or proposed requirements for the components under study; drafts-for-review, not ratified scope
 - `results/` — committed quantitative outputs; regenerated from scripts, not handwritten
 - `glossary.md` — metro-map / layered-layout vocabulary
 
