@@ -8,7 +8,9 @@ node_modules/
 .claude/skills/
 .claude/rules/ai-framework.md
 .claude/settings.local.json
+.claude/statusline.sh
 .claude/worktrees/
+.codex/instructions.md
 .github/chatmodes/
 .github/skills/
 .github/copilot-instructions.md
