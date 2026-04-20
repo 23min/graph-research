@@ -25,3 +25,5 @@ bench/fixtures/external/cache/
 dist/
 build/
 coverage/
+
+# Generated assistant adapter surfaces (rebuild locally with `bash .ai/sync.sh`)
