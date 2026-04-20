@@ -1,6 +1,6 @@
 ---
 id: E-BASELINE-instruments-and-fixtures
-status: draft
+status: in-progress
 framing: 2026-04-20
 ---
 
@@ -75,19 +75,21 @@ Design lessons from EVOLVE-01 carry forward as *design*, not as *code*: no cherr
 
 | ID | Title | Status |
 |---|---|---|
-| M-BASELINE-01 | Fixture loader + invariant checker | not started |
+| M-BASELINE-00 | Absorb dag-map via git subtree | in-progress |
+| M-BASELINE-01 | Fixture loader + invariant checker | paused (pending M-00) |
 | M-BASELINE-02 | Scoring metrics (visible crossings, bend, stretch, clearance) | not started |
 | M-BASELINE-03 | dagre adapter | not started |
 | M-BASELINE-04 | ELK adapter | not started |
 | M-BASELINE-05 | HTML contact sheet + per-fixture JSON report | not started |
 | M-BASELINE-06 | A2 PDF print utility | not started |
-| M-BASELINE-07 | Fixture split discipline + ADR 0004 | not started |
+| M-BASELINE-07 | Fixture split discipline + split-versioning ADR | not started |
 | M-BASELINE-08 | Baseline v0 lock | not started |
 
 ## ADRs
 
-- **ADR 0003** — priority-sweep ratification of `docs/requirements/dag-map-consolidated.md`. Recorded at epic framing, before M-01 starts; captures the five decisions in §11 of the consolidated doc
-- **ADR 0004** — fixture-split versioning discipline. Recorded in M-07
+- **ADR 0003** — priority-sweep ratification of `docs/requirements/dag-map-consolidated.md`. Recorded at epic framing, before M-01 starts; captures the five decisions in §11 of the consolidated doc. (Note: the filesystem ADR 0003 currently records "LLM-assisted research methodology"; the intended-by-this-epic priority-sweep ratification needs a reconciliation pass.)
+- **ADR 0004** — vendor dag-map via git subtree. Recorded at the start of M-00; changes the repo topology so research-driven dag-map edits commit atomically with research code
+- **Split-versioning ADR** — fixture-split versioning discipline. Recorded in M-07; takes the next available ADR number at that time
 
 ## References
 
