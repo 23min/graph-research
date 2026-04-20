@@ -6,7 +6,7 @@ The working hypothesis is that the class of diagrams I keep needing — flows wi
 
 The immediate drivers behind dag-map are two of my own projects: [FlowTime](https://github.com/23min/flowtime), a deterministic discrete-time engine for modelling service flows (routes are work classes through services and queues over time bins), and [Liminara](https://github.com/23min/liminara), a runtime for reproducible nondeterministic computation (runs are DAGs of typed operations with recorded decisions and determinism policies). Both produce flow-structured DAGs with routes-as-input and both need layouts stable under update, so they are where real requirements enter the library. dag-map itself is an open-source library with a broader ambition, and "best-in-class" is set against the literature and established baselines (LOOM, dagre, the MLCM and stability work) — not only against my own use cases. Part of the research here is figuring out how high that bar actually is.
 
-Work proceeds under a three-track process — library engineering, scientific experiments, and public writeups — recorded in `docs/decisions/0002-adopt-three-track-research-framework.md`. Reproducibility is first-class: every reported result carries seed + config + code SHA + split-version hash.
+Work proceeds under a three-track process — library engineering, scientific experiments, and public writeups — recorded in `docs/decisions/0002-adopt-three-track-research-framework.md`. Reproducibility is first-class: every reported result carries seed + config + code SHA + split-version hash. The work is LLM-assisted within scoped limits; `docs/methodology/llm-assisted-research.md` (ADR 0003) names what that covers and what it doesn't.
 
 ## Structure
 

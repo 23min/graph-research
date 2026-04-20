@@ -23,6 +23,7 @@ ALLOWED_PATHS=(
   "docs/README.md"
   "docs/literature/README.md"
   "docs/methodology/three-track-workflow.md"
+  "docs/methodology/llm-assisted-research.md"
   "docs/decisions/"
   "scripts/git-hooks/"
   "scripts/fetch-pdfs.mjs"

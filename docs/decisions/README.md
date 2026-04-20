@@ -8,6 +8,7 @@ Numbered, sequential, durable records of methodological and architectural decisi
 |----|-------|--------|
 | [0001](0001-pivot-from-weighted-sum-single-corpus-ga-to-multi-objective-methodology.md) | Pivot from weighted-sum single-corpus GA to multi-objective methodology | superseded by 0002 |
 | [0002](0002-adopt-three-track-research-framework.md) | Adopt three-track research framework | active |
+| [0003](0003-llm-assisted-research-methodology.md) | LLM-assisted research methodology | active |
 
 ## Template
 
