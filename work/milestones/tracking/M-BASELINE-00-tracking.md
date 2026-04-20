@@ -10,8 +10,8 @@
 ## Acceptance Criteria
 
 - [ ] AC1 — Submodule removal (`dag-map` entry gone from `.gitmodules`; `git submodule status` does not list dag-map)
-- [ ] AC2 — Subtree import at `dag-map-upstream/main` HEAD (recorded in `VENDORED.md` and squash commit message)
-- [ ] AC3 — Vendored state recorded (`dag-map/VENDORED.md`, `dag-map/LICENSE` carried)
+- [ ] AC2 — Subtree import at `dag-map-upstream/main` HEAD (recorded in `dag-map-vendored.md` and squash commit message)
+- [ ] AC3 — Vendored state recorded (`docs/dag-map-vendored.md`, `dag-map/LICENSE` carried)
 - [ ] AC4 — Three wrapper scripts (`scripts/dag-map-sync.mjs`, `dag-map-push.mjs`, `dag-map-status.mjs`) with `--dry-run` defaults
 - [ ] AC5 — Rule and doc updates (`.ai-repo/rules/research.md` rule 4; regenerated `CLAUDE.md`; README dag-map section; epic ADR section)
 - [ ] AC6 — Commit-discipline tooling (advisory pre-commit or documented manual check)
@@ -22,7 +22,7 @@
 | Phase | What | Status |
 |-------|------|--------|
 | 1 | Submodule removal | pending |
-| 2 | Subtree add + VENDORED.md | pending |
+| 2 | Subtree add + dag-map-vendored.md | pending |
 | 3 | Wrapper scripts + commit-discipline check | pending |
 | 4 | Rule 4 update + CLAUDE regen + README | pending |
 | 5 | Commit-discipline hook | pending |

@@ -33,7 +33,7 @@ selected state, interactive edge hit areas"), one commit past the
 prior submodule pin `30075e3`. If upstream advances between spec-draft
 and execution, the actual import SHA is re-confirmed via
 `git fetch dag-map-upstream && git rev-parse dag-map-upstream/main`
-and recorded in `VENDORED.md` and the squash commit message.
+and recorded in `dag-map-vendored.md` and the squash commit message.
 
 No edits to dag-map happen in this milestone — only the topology
 change and the plumbing around it. M-BASELINE-01 (currently paused)
@@ -51,16 +51,16 @@ against plain paths into `dag-map/`.
    - Before importing, `git fetch dag-map-upstream` is run to obtain the current upstream HEAD on `main`.
    - `git subtree add --prefix=dag-map dag-map-upstream main --squash` produces a tree at `dag-map/` matching the current upstream `main` HEAD.
    - The squash commit's message follows the form: `chore(dag-map): import via subtree at <short-SHA>` where `<short-SHA>` is the actual SHA imported, recorded at execution.
-   - A remote named `dag-map-upstream` is configured locally (pointing at `https://github.com/23min/DAG-map.git`) as a precondition to the import. Remote configuration is not tracked by git; the one-line add-remote command is documented in the README's dag-map section and in `VENDORED.md`.
+   - A remote named `dag-map-upstream` is configured locally (pointing at `https://github.com/23min/DAG-map.git`) as a precondition to the import. Remote configuration is not tracked by git; the one-line add-remote command is documented in the README's dag-map section and in `dag-map-vendored.md`.
 
 3. **Vendored state recorded.**
-   - `dag-map/VENDORED.md` is committed with: upstream repo URL, initial import SHA, import date, the commit discipline rule ("dag-map edits commit only under `dag-map/`"), and a pointer to ADR 0004.
+   - `docs/dag-map-vendored.md` is committed with: upstream repo URL, initial import SHA, import date, the commit discipline rule ("dag-map edits commit only under `dag-map/`"), and a pointer to ADR 0004.
    - `dag-map/LICENSE` (Apache-2.0, carried by the import) is present and tracked.
 
 4. **Wrapper scripts.**
-   - `scripts/dag-map-sync.mjs` — pulls upstream changes into `dag-map/`. Default behaviour: `--dry-run` summary of the incoming changes. With `--apply`, runs `git subtree pull --prefix=dag-map dag-map-upstream <branch> --squash` and updates the "last sync SHA" field in `VENDORED.md`. Requires a clean working tree and refuses to run otherwise.
+   - `scripts/dag-map-sync.mjs` — pulls upstream changes into `dag-map/`. Default behaviour: `--dry-run` summary of the incoming changes. With `--apply`, runs `git subtree pull --prefix=dag-map dag-map-upstream <branch> --squash` and updates the "last sync SHA" field in `dag-map-vendored.md`. Requires a clean working tree and refuses to run otherwise.
    - `scripts/dag-map-push.mjs` — produces an upstream-bound commit range. Default: `--dry-run` showing which commits under `dag-map/` would be pushed. With `--apply`, runs `git subtree push --prefix=dag-map dag-map-upstream <branch>` and prints the resulting remote branch and a GitHub compare-URL for opening the PR.
-   - `scripts/dag-map-status.mjs` — prints the last-sync SHA from `VENDORED.md`, the current upstream HEAD (via `git fetch dag-map-upstream` + `git rev-parse`), the local `dag-map/` diff against the last-sync point, and the count of unpushed commits touching `dag-map/`.
+   - `scripts/dag-map-status.mjs` — prints the last-sync SHA from `dag-map-vendored.md`, the current upstream HEAD (via `git fetch dag-map-upstream` + `git rev-parse`), the local `dag-map/` diff against the last-sync point, and the count of unpushed commits touching `dag-map/`.
    - All three scripts exit non-zero with a clear error if `dag-map-upstream` remote is missing, and print the one-line command to add it.
 
 5. **Rule and documentation updates.**
@@ -79,8 +79,8 @@ against plain paths into `dag-map/`.
 
 ## Technical Notes
 
-- **Initial import SHA:** the current `dag-map-upstream/main` HEAD at execution time. At spec-draft that is `f9e4fa234480086e03be3922e20e49ddd4b643ab` ("feat: bindEvents, selected state, interactive edge hit areas"). The submodule was previously pinned at `30075e3` on `chore/relicense-apache-2.0`; this milestone deliberately advances to main's latest. Re-confirm the target SHA at execution (`git fetch dag-map-upstream && git rev-parse dag-map-upstream/main`) and record the actual SHA in `VENDORED.md` and the squash commit message.
-- **Why squash:** keeps the research log readable (one commit per sync). Every sync is recorded in `VENDORED.md`. Upstream per-commit history is always consultable via the `dag-map-upstream` remote.
+- **Initial import SHA:** the current `dag-map-upstream/main` HEAD at execution time. At spec-draft that is `f9e4fa234480086e03be3922e20e49ddd4b643ab` ("feat: bindEvents, selected state, interactive edge hit areas"). The submodule was previously pinned at `30075e3` on `chore/relicense-apache-2.0`; this milestone deliberately advances to main's latest. Re-confirm the target SHA at execution (`git fetch dag-map-upstream && git rev-parse dag-map-upstream/main`) and record the actual SHA in `dag-map-vendored.md` and the squash commit message.
+- **Why squash:** keeps the research log readable (one commit per sync). Every sync is recorded in `dag-map-vendored.md`. Upstream per-commit history is always consultable via the `dag-map-upstream` remote.
 - **Why `--dry-run` default on wrapper scripts:** subtree operations rewrite history in subtle ways. Accidental runs during exploration should be no-ops; opt-in to apply.
 - **Commit discipline warning, not block:** reviewers can override when a commit is genuinely atomic and upstreaming is not intended (e.g. research-only dag-map tweaks that will never be PR'd). A blocking hook would create false-positive friction.
 - **Script dependencies:** prefer `node:child_process` over shelling out through a package. No new npm dependencies added for this milestone.
@@ -101,7 +101,7 @@ against plain paths into `dag-map/`.
 ## Deliverables
 
 - `docs/decisions/0004-vendor-dag-map-via-git-subtree.md` (already drafted on the epic branch)
-- `dag-map/VENDORED.md`
+- `docs/dag-map-vendored.md`
 - `dag-map/LICENSE` (carried by the subtree import; tracked after the fact)
 - `scripts/dag-map-sync.mjs`
 - `scripts/dag-map-push.mjs`
