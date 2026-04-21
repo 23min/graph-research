@@ -222,8 +222,8 @@ One paragraph: overall assessment (approve / request changes).
 
 Active epic: **E-BASELINE-instruments-and-fixtures** (in-progress; spec at `work/epics/E-BASELINE-instruments-and-fixtures/epic.md`). Builds the measurement and rendering instruments so dag-map can be evaluated honestly on a fixture set and frozen as the v0 reference every future EXP compares against.
 
-Active milestone: **M-BASELINE-00 — absorb dag-map via git subtree** (drafted; pending approval to execute). Changes repo topology per ADR 0004 so research-driven dag-map edits commit atomically with research code. On branch `epic/E-BASELINE-instruments-and-fixtures`.
+Next milestone: **M-BASELINE-01 — fixture loader + invariant checker** (draft; paused on `milestone/M-BASELINE-01-fixture-loader-and-invariant-checker`). Resumes after M-00 merges into `epic/E-BASELINE-instruments-and-fixtures`.
 
-Paused: **M-BASELINE-01 — fixture loader + invariant checker**. Its branch (`milestone/M-BASELINE-01-fixture-loader-and-invariant-checker`) is preserved; resumes after M-00 merges to the epic branch.
+**M-BASELINE-00 — absorb dag-map via git subtree** is **complete**. Subtree import at upstream `f9e4fa2`, vendoring documentation committed (`docs/dag-map-vendored.md`), three wrapper scripts (`dag-map-sync/push/status.mjs`) with `--dry-run` defaults, commit-discipline hook wired into `scripts/git-hooks/pre-commit`, 304/304 dag-map tests pass, byte-identical verification against a fresh upstream clone. On branch `milestone/M-BASELINE-00-absorb-dag-map-via-subtree` awaiting merge into the epic branch.
 
 The operating frame is the three-track research framework in `docs/decisions/0002-adopt-three-track-research-framework.md`; operational detail in `docs/methodology/three-track-workflow.md`.

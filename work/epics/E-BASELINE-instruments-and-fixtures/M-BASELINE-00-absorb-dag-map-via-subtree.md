@@ -1,7 +1,7 @@
 ---
 id: M-BASELINE-00-absorb-dag-map-via-subtree
 epic: E-BASELINE-instruments-and-fixtures
-status: in-progress
+status: complete
 depends_on: []
 ---
 
@@ -9,7 +9,7 @@ depends_on: []
 
 **ID:** M-BASELINE-00
 **Epic:** E-BASELINE-instruments-and-fixtures
-**Status:** in-progress
+**Status:** complete
 
 ## Goal
 
