@@ -25,9 +25,11 @@ no layout intervention, no GA. The operating frame is recorded in
 hypothesis pool is a curated menu, not a commitment; specific
 hypotheses get promoted to EXPs when the moment is right.
 
-Active milestone: **M-BASELINE-00 — absorb dag-map via git subtree**
-(drafted on the epic branch; pending approval to execute). Changes the
-repo topology per ADR 0004 so research-driven dag-map edits commit
-atomically with the research code that needs them. M-BASELINE-01
-(fixture loader + invariant checker) is paused on its own branch and
-resumes after M-00 merges to the epic branch.
+Active milestone: **M-BASELINE-01 — fixture loader + invariant checker**
+(draft; paused pending resumption on its own branch). M-BASELINE-00
+(absorb dag-map via git subtree) is **complete** — subtree import at
+upstream `f9e4fa2`, vendoring documentation committed, wrapper scripts
+in place, commit-discipline hook wired in, 304/304 dag-map tests pass,
+byte-identical verification against a fresh upstream clone. Awaiting
+merge of the M-00 branch into `epic/E-BASELINE-instruments-and-fixtures`,
+then M-01 resumes.

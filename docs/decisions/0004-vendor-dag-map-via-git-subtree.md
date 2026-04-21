@@ -63,7 +63,7 @@ Specific rules:
 - **Import is `--squash`.** The graph-research log sees one commit per
   sync ("squashed dag-map at SHA X"), not every upstream commit. Avoids
   log pollution; the upstream SHA is recorded in
-  `dag-map/VENDORED.md` at each sync.
+  `docs/dag-map-vendored.md` at each sync.
 - **Commit discipline: dag-map edits in their own commits.**
   A commit that modifies files under `dag-map/` does *not* also modify
   files outside it. This makes `git subtree push` produce clean PRs
@@ -77,7 +77,7 @@ Specific rules:
 - **Reproducibility protocol updated.** Rule 4's
   "dag-map submodule SHA" is retired. The single "graph-research code
   SHA" now captures dag-map state deterministically, since dag-map is
-  part of the repo. `dag-map/VENDORED.md` records the upstream SHA at
+  part of the repo. `docs/dag-map-vendored.md` records the upstream SHA at
   last sync for audit of what upstream state we are on.
 - **LICENSE carried.** `dag-map/LICENSE` (Apache-2.0) is tracked as
   part of the vendored tree; dag-map's attribution is preserved.

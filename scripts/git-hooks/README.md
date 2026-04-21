@@ -11,6 +11,10 @@ Tracked hook scripts for this repository. Activation is per-clone and
   path (`CLAUDE.md`, `.ai-repo/rules/`, `docs/decisions/`, etc.). Only
   newly-added diff lines are inspected; pre-existing references in
   un-touched lines are grandfathered.
+- The same hook also runs an **advisory** (non-blocking) check on mixed
+  commits — staged changes that touch both `dag-map/` and files outside
+  it — per ADR 0004's commit-discipline rule. The warning prints but
+  does not block; the commit proceeds either way.
 
 ## Activation — option 1 (symlink, recommended)
 

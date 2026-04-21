@@ -78,4 +78,10 @@ if [ "${#violations[@]}" -gt 0 ]; then
   exit 1
 fi
 
+# Advisory check: warn on mixed commits (inside + outside dag-map/).
+# Non-blocking — see ADR 0004's commit discipline.
+if command -v node >/dev/null 2>&1 && [ -f scripts/check-dag-map-commit-discipline.mjs ]; then
+  node scripts/check-dag-map-commit-discipline.mjs || true
+fi
+
 exit 0

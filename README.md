@@ -13,7 +13,7 @@ Work proceeds under a three-track process — library engineering, scientific ex
 - `docs/` — research artefacts (literature, methodology, experiments, decisions, results, glossary)
 - `work/` — active and archived epic and milestone specs, tracking docs
 - `bench/` — evaluation harness (grown per-epic, not pre-built)
-- `dag-map/` — layout library under test (submodule)
+- `dag-map/` — layout library under test (vendored via `git subtree`; see ADR 0004)
 - `.ai/` — AI workflow framework (submodule)
 - `.ai-repo/` — project-specific rules, config, skills
 - `scripts/` — utility scripts (PDF fetch, setup)
@@ -24,17 +24,33 @@ Open in a devcontainer-capable editor (VS Code, Cursor, or `devcontainer up`).
 
 The devcontainer:
 - installs Node 22, Python, and dev dependencies
-- runs `git submodule update --init --recursive`
+- runs `git submodule update --init --recursive` (for `.ai/`)
 - runs `bash .ai/sync.sh` to generate the AI-assistant adapter files
 - bind-mounts `~/Dropbox/Research/graph-research-pdfs` at `/workspaces/research-pdfs` and symlinks `docs/literature/pdfs` to it
 
 If the Dropbox mount is absent (CI, remote Codespaces, collaborators without the folder), `docs/literature/pdfs` remains an empty directory. Run `node scripts/fetch-pdfs.mjs` to pull open-access papers from `docs/literature/bibliography.bib`. Paywalled papers are acquired out-of-band and dropped into the mount.
 
+## dag-map
+
+`dag-map/` is vendored into this repo via `git subtree` rather than as a submodule, so research-driven changes commit atomically with the research code that needs them. See ADR 0004 (`docs/decisions/0004-vendor-dag-map-via-git-subtree.md`) for the rationale and `docs/dag-map-vendored.md` for the last-sync state.
+
+One-time setup (after cloning) — add the upstream remote:
+
+```
+git remote add dag-map-upstream https://github.com/23min/DAG-map.git
+```
+
+Day-to-day:
+
+- `node scripts/dag-map-status.mjs` — last-sync SHA, upstream HEAD, local diff
+- `node scripts/dag-map-sync.mjs [--apply]` — pull upstream main into `dag-map/`
+- `node scripts/dag-map-push.mjs [--apply --branch=<name>]` — push dag-map commits to upstream as a PR-ready branch
+
+**Commit discipline:** a single commit should not modify files both inside and outside `dag-map/`. Mixed commits break `git subtree push`. Run `node scripts/check-dag-map-commit-discipline.mjs` to check staged changes.
+
 ## Current focus
 
-No active epic as of 2026-04-19. The operating frame is recorded in
-`docs/decisions/0002-adopt-three-track-research-framework.md` and
-`work/roadmap.md`. The next epic is in framing.
+Active epic: **E-BASELINE-instruments-and-fixtures** (`work/epics/E-BASELINE-instruments-and-fixtures/epic.md`). Builds the measurement and rendering instruments so dag-map can be evaluated honestly on a fixture set and frozen as the v0 reference point every future EXP compares against. See `work/roadmap.md`.
 
 ## Contributing
 

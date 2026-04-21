@@ -36,10 +36,12 @@ This repo is a research project on automated configuration and multi-objective o
 Every reported result — in an experiment, a methodology doc, a write-up — carries:
 - RNG **seed** (committed integer)
 - **Configuration file** path (committed JSON/YAML)
-- **Code SHA** of the repo at run time (and the `dag-map` submodule SHA)
+- **Code SHA** of the repo at run time
 - **Split version hash** (the `splits.json` `version` field and its SHA-256)
 
 Results that cannot produce all four are not reported. Sketch / exploratory runs get prefixed with `scratch-` and live in a gitignored directory.
+
+dag-map state is captured by the repo's code SHA, since dag-map is vendored via `git subtree` under `dag-map/` (see ADR 0004). The upstream import SHA at the last sync is recorded in `docs/dag-map-vendored.md` for audit.
 
 ## 5. Results are regenerated, never handwritten
 
