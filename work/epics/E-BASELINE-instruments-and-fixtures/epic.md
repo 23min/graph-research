@@ -14,7 +14,7 @@ Build — from scratch, on `main` — the measurement and rendering instruments 
 
 ## Context
 
-Today dag-map on `main` has three layout engines (`layoutMetro`, `layoutFlow`, `layoutHasse`), 285 passing unit tests, and 30 hand-crafted test models. It has no scoring metrics, no external-baseline comparison, no held-out fixture split, no print-quality contact sheet, no reproducibility-protocol plumbing. Everything of that shape was built at `reference/m-evolve-01` and was deliberately not merged during the post-EVOLVE-01 pivot (ADR 0001, ADR 0002).
+Today dag-map on `main` has three layout engines (`layoutMetro`, `layoutFlow`, `layoutHasse`), 285 passing unit tests, and 32 hand-crafted test models (30 primary fixtures plus two `_dim` heatmap variants). It has no scoring metrics, no external-baseline comparison, no held-out fixture split, no print-quality contact sheet, no reproducibility-protocol plumbing. Everything of that shape was built at `reference/m-evolve-01` and was deliberately not merged during the post-EVOLVE-01 pivot (ADR 0001, ADR 0002).
 
 The pivot's scoped-out methodology epic (`E-EVOLVE-v2-methodology`) was rejected as six-milestones-of-infrastructure-before-any-result. This epic does less: no GA, no multi-objective optimiser, no new layout intervention, no user study. It only builds the measuring stick.
 
@@ -66,7 +66,7 @@ Design lessons from EVOLVE-01 carry forward as *design*, not as *code*: no cherr
 | Risk / Question | Impact | Mitigation |
 |---|---|---|
 | ELK adapter integration (elkjs WASM or Java subprocess) reveals unexpected friction | Med | M-04 is isolated; dagre still ships from M-03 if ELK slips |
-| The 30 existing test models are not a representative fixture set | Med | M-07 is explicitly tasked with deciding the full fixture set after the contact sheet (M-05) reveals coverage gaps |
+| The 32 existing test models are not a representative fixture set | Med | M-07 is explicitly tasked with deciding the full fixture set after the contact sheet (M-05) reveals coverage gaps |
 | A single "bend" metric (A3) will disagree with what the research questions eventually want (Q4 may prefer curvature integral) | Low | A3 is documented as a baseline choice, not a final commitment; a future EXP can propose replacement with evidence |
 | The reproducibility protocol adds plumbing overhead to every instrument | Low | The discipline is load-bearing; pay it up front rather than retrofit |
 | Building on `main` without a working bench substrate means early milestones have no place to run yet | Low | M-01 delivers the loader; subsequent milestones build on it; no substrate needs to exist beforehand |
@@ -76,7 +76,7 @@ Design lessons from EVOLVE-01 carry forward as *design*, not as *code*: no cherr
 | ID | Title | Status |
 |---|---|---|
 | M-BASELINE-00 | Absorb dag-map via git subtree | complete |
-| M-BASELINE-01 | Fixture loader + invariant checker | paused (pending M-00) |
+| M-BASELINE-01 | Fixture loader + invariant checker | in-progress |
 | M-BASELINE-02 | Scoring metrics (visible crossings, bend, stretch, clearance) | not started |
 | M-BASELINE-03 | dagre adapter | not started |
 | M-BASELINE-04 | ELK adapter | not started |

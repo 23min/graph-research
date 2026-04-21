@@ -26,10 +26,8 @@ hypothesis pool is a curated menu, not a commitment; specific
 hypotheses get promoted to EXPs when the moment is right.
 
 Active milestone: **M-BASELINE-01 — fixture loader + invariant checker**
-(draft; paused pending resumption on its own branch). M-BASELINE-00
-(absorb dag-map via git subtree) is **complete** — subtree import at
-upstream `f9e4fa2`, vendoring documentation committed, wrapper scripts
-in place, commit-discipline hook wired in, 304/304 dag-map tests pass,
-byte-identical verification against a fresh upstream clone. Awaiting
-merge of the M-00 branch into `epic/E-BASELINE-instruments-and-fixtures`,
-then M-01 resumes.
+(in-progress on `milestone/M-BASELINE-01-fixture-loader-and-invariant-checker`).
+M-BASELINE-00 (absorb dag-map via git subtree) is complete and merged
+into `epic/E-BASELINE-instruments-and-fixtures`. M-01 delivers the
+deterministic fixture loader + invariant checker in a new `bench/`
+directory, consuming dag-map through an npm-workspace symlink.

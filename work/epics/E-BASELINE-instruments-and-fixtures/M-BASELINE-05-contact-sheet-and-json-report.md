@@ -47,7 +47,7 @@ The contact sheet is multi-engine by design — single-engine gallery tooling al
    - Error propagation: an engine failure on one cell does not prevent the other 11 cells from rendering
 
 5. **Performance.**
-   - Full run across all 30 fixtures × 4 engines completes in under 60 seconds on a developer machine
+   - Full run across all 32 fixtures × 4 engines completes in under 60 seconds on a developer machine
    - If any single cell exceeds 5 seconds, a warning is emitted (not a test failure — a diagnostic)
 
 ## Technical Notes
