@@ -2,6 +2,18 @@
 
 The bench harness and supporting scripts are Node.js (ESM, `.mjs`). Tests use `node:test` from the Node standard library unless a milestone spec calls out a different runner.
 
+## Scope — what must be tested
+
+**Required (TDD from RED phase):**
+- All `dag-map/` source code (already covered — 304+ tests passing in the vendored tree).
+- All `bench/` code that is reused across experiments: metrics, loaders, invariant checkers, fixture catalogues, split-loaders, external-baseline adapters (dagre, ELK), contact-sheet / report generators. If a future EXP could plausibly re-run it, it needs tests.
+
+**Not required (smoke-testing sufficient, tests welcome if cheap):**
+- Orchestration and maintenance scripts under `scripts/`: `dag-map-sync.mjs`, `dag-map-push.mjs`, `dag-map-status.mjs`, `check-dag-map-commit-discipline.mjs`, `fetch-pdfs.mjs`, `setup-private-mounts.sh`. These are single-operator CLIs that wrap `git` or fetch open-access PDFs; they fail loud, dry-run by default, and aren't reused across experiments.
+- One-off EXP-specific scripts that execute a single experiment and won't be re-invoked. Reproducibility comes from committing the script + the code SHA; unit tests on throwaway scripts are over-engineering.
+
+**Judgment-call zone:** if you're unsure whether a piece of bench code is "reused across experiments" or "experiment-specific throwaway," default to testing it. Undertesting research-core code is a research-integrity risk; overtesting a throwaway script is a minor waste.
+
 ## Test coverage guide (RED phase)
 
 For each acceptance criterion, consider these categories. Not every category applies — use judgment.

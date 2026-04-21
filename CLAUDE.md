@@ -8,6 +8,17 @@ Keep it assistant-neutral.
 Generated assistant adapter files under `.github/` and `.claude/` are local build outputs by default.
 Keep their source of truth in `.ai/` and `.ai-repo/`, and regenerate them locally with `bash .ai/sync.sh`.
 
+## Session Start
+
+At the start of every session, pick up accumulated context:
+
+- `work/decisions.md` — shared decision log across all agents
+- `work/agent-history/<role>.md` — your role's accumulated learnings (read only the file matching the active agent)
+- `work/gaps.md` — deferred work items
+- `## Current Work` section below — active epic + milestone
+
+After `/compact` or a fresh session, this file is re-available via the system prompt. If rules or project config changed mid-session, say **"refresh context"** to trigger a full re-read (see generated adapter files for the full refresh checklist).
+
 ## Hard Rules (summary — full rules in `.ai/rules.md`)
 
 - **NEVER commit or push without explicit human approval** — "continue" / "ok" do not count
@@ -22,10 +33,10 @@ Keep their source of truth in `.ai/` and `.ai-repo/`, and regenerate them locall
 
 | Intent | Agent | Read first |
 |--------|-------|------------|
-| build, implement, code, start, fix, patch | **builder** | `.ai/agents/builder.md` + relevant skill |
-| plan, design, scope, epic, architecture | **planner** | `.ai/agents/planner.md` + relevant skill |
-| review, check, validate, wrap, finish | **reviewer** | `.ai/agents/reviewer.md` + relevant skill |
-| release, deploy, tag, publish | **deployer** | `.ai/agents/deployer.md` + relevant skill |
+| build, implement, code, start, fix, patch | **builder** | `.claude/agents/builder.md` + relevant skill |
+| plan, design, scope, epic, architecture | **planner** | `.claude/agents/planner.md` + relevant skill |
+| review, check, validate, wrap, finish | **reviewer** | `.claude/agents/reviewer.md` + relevant skill |
+| release, deploy, tag, publish | **deployer** | `.claude/agents/deployer.md` + relevant skill |
 
 ## Framework Sources
 
@@ -33,8 +44,8 @@ Keep their source of truth in `.ai/` and `.ai-repo/`, and regenerate them locall
 |--------|---------|
 | `.ai/rules.md` | Full rules and enforcement levels |
 | `.ai/paths.md` | Artifact layout defaults |
-| `.ai/agents/` | Agent definitions (→ `.claude/agents/`, `.github/chatmodes/`) |
-| `.ai/skills/` | Skill workflows (→ `.claude/skills/`, `.github/skills/`) |
+| `.ai/agents/` | Agent source definitions (generated into `.claude/agents/` — read those at invocation time) |
+| `.ai/skills/` | Skill source workflows (generated into `.claude/skills/` and `.github/skills/`) |
 | `.ai/templates/` | Document templates |
 | `.ai-repo/rules/` | **Project-specific rules** — read before starting work |
 | `.ai-repo/config/` | Artifact layout overrides |
@@ -54,8 +65,8 @@ These values are resolved from framework defaults in .ai/paths.md and repo overr
 | `completedEpicPathTemplate` | `work/done/<epic>/` | Completed epic archive template |
 | `epicIdPattern` | `E-{NN}[optional-letter]` | Epic ID naming pattern |
 | `milestoneIdPattern` | `M-<TRACK>-<NN>` | Milestone ID naming pattern |
-| `frameworkSkillPrefix` | `wf` | Prefix for framework skill slash-commands (e.g. `wf:patch`) |
-| `repoSkillPrefix` | `` | Prefix for repo-specific skill slash-commands (e.g. `wf-li:app-legibility`) |
+| `frameworkSkillPrefix` | `wf` | Prefix for framework skill slash-commands (e.g. `/wf-patch`) |
+| `repoSkillPrefix` | `` | Prefix for repo-specific skill slash-commands (e.g. `/wf-li-app-legibility`) |
 
 ## Project-Specific Rules
 
@@ -163,6 +174,18 @@ These directories contain material that is either licensed for personal reading 
 
 The bench harness and supporting scripts are Node.js (ESM, `.mjs`). Tests use `node:test` from the Node standard library unless a milestone spec calls out a different runner.
 
+## Scope — what must be tested
+
+**Required (TDD from RED phase):**
+- All `dag-map/` source code (already covered — 304+ tests passing in the vendored tree).
+- All `bench/` code that is reused across experiments: metrics, loaders, invariant checkers, fixture catalogues, split-loaders, external-baseline adapters (dagre, ELK), contact-sheet / report generators. If a future EXP could plausibly re-run it, it needs tests.
+
+**Not required (smoke-testing sufficient, tests welcome if cheap):**
+- Orchestration and maintenance scripts under `scripts/`: `dag-map-sync.mjs`, `dag-map-push.mjs`, `dag-map-status.mjs`, `check-dag-map-commit-discipline.mjs`, `fetch-pdfs.mjs`, `setup-private-mounts.sh`. These are single-operator CLIs that wrap `git` or fetch open-access PDFs; they fail loud, dry-run by default, and aren't reused across experiments.
+- One-off EXP-specific scripts that execute a single experiment and won't be re-invoked. Reproducibility comes from committing the script + the code SHA; unit tests on throwaway scripts are over-engineering.
+
+**Judgment-call zone:** if you're unsure whether a piece of bench code is "reused across experiments" or "experiment-specific throwaway," default to testing it. Undertesting research-core code is a research-integrity risk; overtesting a throwaway script is a minor waste.
+
 ## Test coverage guide (RED phase)
 
 For each acceptance criterion, consider these categories. Not every category applies — use judgment.
@@ -222,8 +245,8 @@ One paragraph: overall assessment (approve / request changes).
 
 Active epic: **E-BASELINE-instruments-and-fixtures** (in-progress; spec at `work/epics/E-BASELINE-instruments-and-fixtures/epic.md`). Builds the measurement and rendering instruments so dag-map can be evaluated honestly on a fixture set and frozen as the v0 reference every future EXP compares against.
 
-Next milestone: **M-BASELINE-01 — fixture loader + invariant checker** (draft; paused on `milestone/M-BASELINE-01-fixture-loader-and-invariant-checker`). Resumes after M-00 merges into `epic/E-BASELINE-instruments-and-fixtures`.
+Active milestone: **M-BASELINE-01 — fixture loader + invariant checker** (in-progress on `milestone/M-BASELINE-01-fixture-loader-and-invariant-checker`). Spec edits and workspace scaffolding in progress; TDD on loader + invariant checker starts once the scaffold lands.
 
-**M-BASELINE-00 — absorb dag-map via git subtree** is **complete**. Subtree import at upstream `f9e4fa2`, vendoring documentation committed (`docs/dag-map-vendored.md`), three wrapper scripts (`dag-map-sync/push/status.mjs`) with `--dry-run` defaults, commit-discipline hook wired into `scripts/git-hooks/pre-commit`, 304/304 dag-map tests pass, byte-identical verification against a fresh upstream clone. On branch `milestone/M-BASELINE-00-absorb-dag-map-via-subtree` awaiting merge into the epic branch.
+**M-BASELINE-00 (absorb dag-map via git subtree)** is complete and merged into `epic/E-BASELINE-instruments-and-fixtures`. dag-map is now vendored at `dag-map/` via subtree (ADR 0004); bench consumes it via npm workspace symlink. See `docs/dag-map-vendored.md` for the mutation workflow.
 
 The operating frame is the three-track research framework in `docs/decisions/0002-adopt-three-track-research-framework.md`; operational detail in `docs/methodology/three-track-workflow.md`.
