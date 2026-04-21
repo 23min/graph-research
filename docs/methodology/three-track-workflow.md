@@ -83,9 +83,11 @@ EXP-NN-<slug>/
 ```
 
 Reproducibility protocol fields required in `setup.md`: RNG seed,
-configuration file path, code SHA (dag-map + bench), split version
-hash. Every entry in `results/` carries these four fields in its
-header.
+configuration file path, repo code SHA, split version hash. Every
+entry in `results/` carries these four fields in its header. (Per
+ADR 0004, dag-map is vendored into this repo via `git subtree`, so
+a single repo SHA captures dag-map state — no separate dag-map SHA
+is recorded.)
 
 ### Phase 4 — Library changes
 
@@ -195,6 +197,13 @@ Framework skills live in `.ai/skills/`. Repo-specific skills live in
   enforces this with grep checks at every epic wrap.
 - **No unauthorized commits or pushes.** Commits and pushes require
   explicit principal approval. "Continue" and "ok" do not count.
+- **dag-map mutation per experiment.** Experiments modify `dag-map/`
+  freely on their own branches. See
+  [`docs/dag-map-vendored.md`](../dag-map-vendored.md) — section
+  "Mutating dag-map per experiment" — for the workflow, the three
+  flavours of edit (broadly useful vs. research-private vs.
+  borderline), and the relationship to dag-map's upstream repository
+  and its other consumers (Liminara, FlowTime).
 
 ## What this document is not
 
