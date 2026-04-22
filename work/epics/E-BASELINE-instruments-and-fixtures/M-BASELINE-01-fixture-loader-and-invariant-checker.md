@@ -1,7 +1,8 @@
 ---
 id: M-BASELINE-01-fixture-loader-and-invariant-checker
 epic: E-BASELINE-instruments-and-fixtures
-status: in-progress
+status: complete
+completed: 2026-04-22
 depends_on: [M-BASELINE-00]
 ---
 
@@ -9,7 +10,7 @@ depends_on: [M-BASELINE-00]
 
 **ID:** M-BASELINE-01
 **Epic:** E-BASELINE-instruments-and-fixtures
-**Status:** in-progress
+**Status:** complete
 
 ## Goal
 
