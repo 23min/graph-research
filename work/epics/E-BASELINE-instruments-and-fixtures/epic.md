@@ -76,7 +76,7 @@ Design lessons from EVOLVE-01 carry forward as *design*, not as *code*: no cherr
 | ID | Title | Status |
 |---|---|---|
 | M-BASELINE-00 | Absorb dag-map via git subtree | complete |
-| M-BASELINE-01 | Fixture loader + invariant checker | in-progress |
+| M-BASELINE-01 | Fixture loader + invariant checker | complete |
 | M-BASELINE-02 | Scoring metrics (visible crossings, bend, stretch, clearance) | not started |
 | M-BASELINE-03 | dagre adapter | not started |
 | M-BASELINE-04 | ELK adapter | not started |

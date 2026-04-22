@@ -245,8 +245,10 @@ One paragraph: overall assessment (approve / request changes).
 
 Active epic: **E-BASELINE-instruments-and-fixtures** (in-progress; spec at `work/epics/E-BASELINE-instruments-and-fixtures/epic.md`). Builds the measurement and rendering instruments so dag-map can be evaluated honestly on a fixture set and frozen as the v0 reference every future EXP compares against.
 
-Active milestone: **M-BASELINE-01 — fixture loader + invariant checker** (in-progress on `milestone/M-BASELINE-01-fixture-loader-and-invariant-checker`). Spec edits and workspace scaffolding in progress; TDD on loader + invariant checker starts once the scaffold lands.
+Next milestone: **M-BASELINE-02 — scoring metrics** (visible crossings, bend, stretch, clearance). Not started.
 
 **M-BASELINE-00 (absorb dag-map via git subtree)** is complete and merged into `epic/E-BASELINE-instruments-and-fixtures`. dag-map is now vendored at `dag-map/` via subtree (ADR 0004); bench consumes it via npm workspace symlink. See `docs/dag-map-vendored.md` for the mutation workflow.
+
+**M-BASELINE-01 (fixture loader + invariant checker)** is complete and merged (`b82bbdd`). Bench workspace established at `bench/` with `loadFixture`/`listFixtures` over a 32-entry `{id, source}` catalogue, and `checkInvariants`/`checkDeterminism` implementing forward-only-layers, forward-only-x, and topological-x over dag-map layouts. 35 bench tests + 304 dag-map tests green.
 
 The operating frame is the three-track research framework in `docs/decisions/0002-adopt-three-track-research-framework.md`; operational detail in `docs/methodology/three-track-workflow.md`.

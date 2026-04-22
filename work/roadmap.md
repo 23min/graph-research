@@ -25,9 +25,12 @@ no layout intervention, no GA. The operating frame is recorded in
 hypothesis pool is a curated menu, not a commitment; specific
 hypotheses get promoted to EXPs when the moment is right.
 
-Active milestone: **M-BASELINE-01 — fixture loader + invariant checker**
-(in-progress on `milestone/M-BASELINE-01-fixture-loader-and-invariant-checker`).
-M-BASELINE-00 (absorb dag-map via git subtree) is complete and merged
-into `epic/E-BASELINE-instruments-and-fixtures`. M-01 delivers the
+M-BASELINE-00 (absorb dag-map via git subtree) and M-BASELINE-01
+(fixture loader + invariant checker) are complete and merged into
+`epic/E-BASELINE-instruments-and-fixtures`. M-01 delivered the
 deterministic fixture loader + invariant checker in a new `bench/`
-directory, consuming dag-map through an npm-workspace symlink.
+workspace, consuming dag-map through an npm-workspace symlink; 35
+bench tests cover the loader and the three hard invariants.
+
+Next milestone: **M-BASELINE-02 — scoring metrics** (visible crossings,
+bend, stretch, clearance). Not started.

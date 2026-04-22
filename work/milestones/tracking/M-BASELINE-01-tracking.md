@@ -1,10 +1,10 @@
 # Fixture loader + invariant checker — Tracking
 
 **Started:** 2026-04-21
-**Completed:** pending
-**Branch:** milestone/M-BASELINE-01-fixture-loader-and-invariant-checker
+**Completed:** 2026-04-22
+**Branch:** milestone/M-BASELINE-01-fixture-loader-and-invariant-checker (merged into `epic/E-BASELINE-instruments-and-fixtures` at `b82bbdd`)
 **Spec:** work/epics/E-BASELINE-instruments-and-fixtures/M-BASELINE-01-fixture-loader-and-invariant-checker.md
-**Commits:** bd84d69, e424655
+**Commits:** `bd84d69` (milestone start — spec refinements), `e424655` (tracking-doc template alignment), `a7a3866` (implementation — bench workspace + loader + checker)
 
 ## Acceptance Criteria
 
@@ -68,3 +68,12 @@ Done 2026-04-22. Walked both `loader.mjs` and `checker.mjs` line-by-line. Every 
 
 - ADR 0003 drift was deferred at milestone-start and lives in `work/gaps.md`.
 - ESLint + Prettier configuration for bench — logged as a gap in `work/gaps.md` so it doesn't get lost between milestones. Short form: AC5 didn't list lint/format, so M-BASELINE-01 stayed minimal; candidate home is the metrics milestone or a dedicated tooling milestone.
+
+## Doc findings
+
+Scoped doc-gardening sweep at wrap time (2026-04-22). Change-set restricted to `bench/`, `.nvmrc`, root `package.json`/`package-lock.json`, and workflow surfaces under `work/` — no files touched under `docs/`.
+
+- **Private-source leak grep (rule 9)**: clean. Greps for all four boundary-path prefixes (the two tracked-directory prefixes under `docs/` and the two bind-mount aliases they symlink to) over all milestone-commit diffs produced zero matches. No blockers.
+- **TODO / debug-code scan**: clean. Grep for `TODO|FIXME|XXX|HACK|console\.(log|error|warn)|debugger` across `bench/` produced zero matches.
+- **`docs/index.md` missing (stale-index warning)**: the framework doc-gardening skill's content catalog (`docs/index.md`) has not yet been generated in this repo. Per the skill's contract, this warrants a `lint:full` run to bootstrap the index — but the wrap-milestone skill explicitly defers full lint runs to `wrap-epic` for efficiency. Recorded here as drift; no action this milestone. Resolution path: bootstrap the index as part of the first `wrap-epic` on E-BASELINE, or in a dedicated doc-gardening session if the gap outlives the epic.
+- **`docs/` tree untouched by this milestone**: all implementation landed under `bench/`; the only narrative documentation change was `bench/README.md` (one paragraph). No cross-referencing issues within `docs/` could have been introduced. No fix-now, no gaps, no dismissals beyond the stale-index warning above.
