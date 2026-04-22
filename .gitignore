@@ -27,3 +27,4 @@ build/
 coverage/
 
 # Generated assistant adapter surfaces (rebuild locally with `bash .ai/sync.sh`)
+.ai-repo/.framework-sync-sha
