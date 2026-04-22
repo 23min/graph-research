@@ -4,8 +4,12 @@
   "private": true,
   "type": "module",
   "description": "Research project on automated configuration and multi-objective optimization of layered/metro-map graph layout",
+  "workspaces": [
+    "bench",
+    "dag-map"
+  ],
   "scripts": {
-    "test": "echo \"(no tests at repo root — see bench/ after M-V2-01 import)\""
+    "test": "npm test --workspaces --if-present"
   },
   "license": "Apache-2.0"
 }

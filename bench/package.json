@@ -1,0 +1,17 @@
+{
+  "name": "bench",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Baseline measurement and rendering instruments for dag-map",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "test": "node --test \"fixtures/__tests__/*.test.mjs\" \"invariants/__tests__/*.test.mjs\""
+  },
+  "dependencies": {
+    "dag-map": "*"
+  },
+  "license": "Apache-2.0"
+}

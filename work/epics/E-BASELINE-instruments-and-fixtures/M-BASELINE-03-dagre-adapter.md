@@ -37,7 +37,7 @@ The adapter is a pure translation layer — fixture-in, layout-out — with no d
    - When dagre fails (e.g. on fixtures with cycles), the adapter throws a clear error naming the fixture and the dagre failure
 
 4. **Scoreability.**
-   - `scoreLayout(layoutDagre(fixture), cfg)` returns a valid five-metric vector with no NaN or Infinity values on any of the 30 M-01 fixtures
+   - `scoreLayout(layoutDagre(fixture), cfg)` returns a valid five-metric vector with no NaN or Infinity values on any of the 32 M-01 fixtures
    - A test runs dagre on every fixture in the loader and asserts finite, non-negative scores
 
 5. **Tests.**

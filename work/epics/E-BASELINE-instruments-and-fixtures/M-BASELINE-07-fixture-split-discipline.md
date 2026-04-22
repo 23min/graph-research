@@ -17,14 +17,14 @@ Decide what the fixture set should actually contain, split it into `train / vali
 
 ## Context
 
-After M-05 the contact sheet exists. That means for the first time we can look at dag-map today across a fixture set and ask "do these fixtures actually test what we care about?" The answer will inform what gets added (external corpora? stress fixtures? process-mining samples?) and what gets dropped. This decision happens here, not in M-01, because M-01 was deliberately scoped to the 30 test models already on `main` so the baseline could take shape without waiting on a fixture-selection debate.
+After M-05 the contact sheet exists. That means for the first time we can look at dag-map today across a fixture set and ask "do these fixtures actually test what we care about?" The answer will inform what gets added (external corpora? stress fixtures? process-mining samples?) and what gets dropped. This decision happens here, not in M-01, because M-01 was deliberately scoped to the 32 test models already on `main` so the baseline could take shape without waiting on a fixture-selection debate.
 
 The split discipline is load-bearing for every future EXP: once frozen, training-side code reads only the train / validation partition; held-out is touched only by the EXP's final evaluation pass. Violations are caught by a CI guard that treats direct reads of held-out paths from training code as build failures.
 
 ## Acceptance Criteria
 
 1. **Fixture-set decision (captured in ADR 0004).**
-   - ADR 0004 records: which fixtures are in v1 (the 30 on `main` plus any additions), the stratification axes (candidates: node count, route count, fan-out, class count), the split proportions (candidate: 60 / 20 / 20), the held-out rationale
+   - ADR 0004 records: which fixtures are in v1 (the 32 on `main` plus any additions), the stratification axes (candidates: node count, route count, fan-out, class count), the split proportions (candidate: 60 / 20 / 20), the held-out rationale
    - External corpora decision: ADR 0004 explicitly states whether Rome-Lib, AT&T/North, GLaDOS, RandDAG subsets are included in v1 or deferred to a future fixture-set version
 
 2. **`splits.json` format.**
@@ -60,7 +60,7 @@ The split discipline is load-bearing for every future EXP: once frozen, training
 
 ## Technical Notes
 
-- Stratification is feasible even at 30 fixtures if the axes are chosen well. More axes → smaller strata → less flexibility; start with one or two (e.g. size bucket).
+- Stratification is feasible even at 32 fixtures if the axes are chosen well. More axes → smaller strata → less flexibility; start with one or two (e.g. size bucket).
 - The `sha256` covers the canonicalised fixture content, not file paths — renames do not invalidate a split; content changes do.
 - The CI guard is implemented as a `node --test` suite so it runs in the same pipeline as everything else; no separate tooling.
 - External corpora discussion in the ADR: defer if acquisition / licensing / format-conversion cost exceeds what this epic can absorb. The point of the ADR is to make the defer-or-include decision explicit and date-stamped.
